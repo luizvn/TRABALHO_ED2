@@ -58,8 +58,50 @@
                     <a href="etapa3.html">etapa 3</a>
                 </h2>
             </nav>
+            <div class="container text-center">
+
+                <h2> Exemplo:  {{ titulo}} </h2>
+              
+                <table class="table table-bordered">
+              
+                  <thead>
+              
+                    <tr>
+              
+                      <th>Nome</th>
+              
+                      <th>Quantidade</th>
+              
+              
+              
+                    </tr>
+              
+                  </thead>
+              
+                  <tbody>
+              
+                  {% for produto in catalogo%}
+              
+                       <tr>
+              
+                            <td>{{produto.nome}}</td>
+              
+                            <td>{{produto.quantidade}}</td>
+              
+                       </tr>
+              
+                  {%endfor%}
+              
+              
+              
+                </tbody>
+              
+                </table>
+              
+              </div>
             <section>
                 <h2></h2>forms
+                
             </section>
             <section>
                 tabela
