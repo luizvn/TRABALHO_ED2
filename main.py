@@ -1,4 +1,6 @@
 from flask import Flask, url_for, render_template
+import json
+import sys
 
 # inicializaçaõ
 app = Flask(__name__)
@@ -13,11 +15,12 @@ def principal():
 @app.route('/etapa1')
 def sobre1():
     titulo= "Catalogo"
-    catalogo = [
-        {"nome": "Cadeira", "quantidade": 8},
-        {"nome": "Cafeteira", "quantidade": 4},
-        {"nome": "Mixer", "quantidade": 6},
-    ]
+
+    try:
+        with open('catalogo.json', 'r') as file:
+            catalogo = json.load(file)
+    except Exception as e:
+        print(str(e))
     return render_template('etapa1.html', titulo = titulo, catalogo = catalogo)
 
 @app.route('/etapa2')
