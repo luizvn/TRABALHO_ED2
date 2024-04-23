@@ -61,30 +61,24 @@
             <div>
                 <form method="post" action='/submit_form'>
                     <fieldset>
-                      
-                    </fieldset>
-                    <fieldset>
-                     
-                    </fieldset>
-                    <fieldset>
-                      <label for="categoria">Insira a categoria desejada
-                        <select id="categoria" name="categoria">
-                          <option value="">(select one)</option>
-                          <option value="roupa">Roupa</option>
-                          <option value="calcado">Calçados</option>
-                          <option value="bola">Bolas</option>
-                          <option value="outro">Outros</option>
-                        </select>
-                      </label>
-                      <label for="marca">Insira a marca desejada
-                        <select id="marca" name="marca">
-                          <option value="">(select one)</option>
-                          <option value="nike">Nike</option>
-                          <option value="adidas">Adidas</option>
-                          <option value="wilson">Wilson</option>
-                          <option value="outro">Outros</option>
-                        </select>
-                      </label>
+                        <label for="categoria">Insira a categoria desejada
+                            <select id="categoria" name="categoria">
+                                <option value="">(select one)</option>
+                                <option value="roupa">Roupa</option>
+                                <option value="calcado">Calçados</option>
+                                <option value="bola">Bolas</option>
+                                <option value="outro">Outros</option>
+                            </select>
+                        </label>
+                        <label for="marca">Insira a marca desejada
+                            <select id="marca" name="marca">
+                                <option value="">(select one)</option>
+                                <option value="nike">Nike</option>
+                                <option value="adidas">Adidas</option>
+                                <option value="wilson">Wilson</option>
+                                <option value="outro">Outros</option>
+                            </select>
+                        </label>
                       <label for="cor">Insira a cor desejada
                         <select id="cor" name="cor">
                           <option value="">(select one)</option>
@@ -99,48 +93,47 @@
                     <input type="submit" value="Submit" />
                   </form>
 
-
-
             </div>
             <div class="container text-center">
 
                 <h2> Exemplo:  {{ titulo}} </h2>
-              
-                <table class="table table-bordered">
-              
-                  <thead>
-              
-                    <tr>
-              
-                      <th>categoria</th>
-              
-                      <th>tipo</th>
-              
-              
-              
-                    </tr>
-              
-                  </thead>
-              
-                  <tbody>
-              
-                  {% for produto in catalogo%}
-              
-                       <tr>
-              
-                            <td>{{produto.categoria}}</td>
-              
-                            <td>{{produto.tipo}}</td>
-              
-                       </tr>
-              
-                  {%endfor%}
-              
-              
-              
-                </tbody>
-              
+
+                  <table class="table table-bordered">
+                
+                    <thead>
+                        <tr> 
+                            <th>categoria</th>
+                  
+                            <th>tipo</th>
+                        </tr>
+                    </thead>
+                  
+                    <tbody>
+                        {% for codigo, produto in catalogo.items()%}
+                            <tr>
+                              
+                                <td>{{codigo}}</td>
+                  
+                                <td>{{produto.tipo}}</td>
+                            </tr>
+                        {%endfor%}
+                    </tbody>
+                
                 </table>
+
+                <form method="post", action="">
+                    <fieldset>
+                        <label for="categoria">Insira a categoria: <input id="categoria" name="categoria" type="text" required /></label>
+                        <label for="tipo">Insira o tipo: <input id="tipo" name="tipo" type="text" required /></label>
+                        <label for="marca">Insira a marca: <input id="marca" name="marca" type="text" required /></label>
+                        <label for="modelo">Insira o modelo: <input id="modelo" name="modelo" type="text" required /></label>
+                        <label for="cor">Insira a porra da cor: <input id="cor" name="cor" type="text" required> </label>
+                        <label for="valor">Insira o valor: <input id="valor" name="valor" type="number" required></label> 
+                        <label for="estoque">Insira o estoque: <input id="estoque" name="estoque" type="number" required></label>
+                        
+                    </fieldset>
+                    <input type="submit" value="Submit" />
+                </form>
               
               </div>
             <section>

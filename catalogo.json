@@ -1,7 +1,7 @@
-[
-    {"categoria": "roupa", "tipo": "camisa", "marca": "nike", "modelo": "dry-fit", "cor":"branco", "valor":113.90, "estoque": 900, "tamanhos_disponiveis": ["tamanho unico"]}, 
-    {"categoria": "roupa", "tipo": "short", "marca": "adidas", "modelo": "pacer 3 listras", "cor":"preto", "valor":87.90, "estoque": 300, "tamanhos_disponiveis": ["tamanho unico"]},
-    {"categoria": "bola", "tipo": "basquete", "marca": "wilson", "modelo": "nba drv", "cor":"laranja", "valor":115.00, "estoque": 700, "tamanhos_disponiveis": ["tamanho unico"]},
-    {"categoria": "calcado", "tipo": "basqueteira", "marca": "nike", "modelo": "zoom freak 5", "cor":"oreo", "valor":820.00, "estoque": 78, "tamanhos_disponiveis": ["tamanho unico"]},
-    {"categoria": "bola", "tipo": "futebol de campo", "marca": "adidas", "modelo": "UCL 2019", "cor":"branco e cinza", "valor":181.60, "estoque": 18, "tamanhos_disponiveis": ["tamanho unico"]}
-]
+{
+    "1" : {"categoria": "roupa", "tipo": "camisa", "marca": "nike", "modelo": "dry-fit", "cor":"branco", "valor":113.90, "estoque": 900, "tamanhos_disponiveis": ["tamanho unico"]}, 
+    "2" : {"categoria": "roupa", "tipo": "short", "marca": "adidas", "modelo": "pacer 3 listras", "cor":"preto", "valor":87.90, "estoque": 300, "tamanhos_disponiveis": ["tamanho unico"]},
+    "3" : {"categoria": "bola", "tipo": "basquete", "marca": "wilson", "modelo": "nba drv", "cor":"laranja", "valor":115.00, "estoque": 700, "tamanhos_disponiveis": ["tamanho unico"]},
+    "4" : {"categoria": "calcado", "tipo": "basqueteira", "marca": "nike", "modelo": "zoom freak 5", "cor":"oreo", "valor":820.00, "estoque": 78, "tamanhos_disponiveis": ["tamanho unico"]},
+    "5" : {"categoria": "bola", "tipo": "futebol de campo", "marca": "adidas", "modelo": "UCL 2019", "cor":"branco e cinza", "valor":181.60, "estoque": 18, "tamanhos_disponiveis": ["tamanho unico"]}
+}

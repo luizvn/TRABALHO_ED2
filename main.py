@@ -60,6 +60,32 @@ def submit_form():
 
     return render_template('etapa1.html', catalogo = output)
 
+@app.route('/inserir')
+def inserir():
+    try:
+        with open('catalogo.json', 'r') as file:
+            catalogo = json.load(file)
+    except Exception as e:
+        print(str(e))
+    
+    categoria = request.form['categoria']
+    tipo      = request.form['tipo']
+    marca     = request.form['marca']
+    modelo    = request.form['modelo']
+    cor       = request.form['cor']
+    valor     = request.form['valor']
+    estoque   = request.form['estoque']
+    tamanhos_disponiveis = 'tamanho unico'
+
+    output = []
+
+    output.append(categoria, tipo, marca, modelo, cor, valor, estoque, tamanhos_disponiveis)
+
+    return render_template('etapa1.html', catalogo = output)
+
+@app.route('/deletar')
+def deletar():
+    pass
 
 
 @app.route('/etapa2')
