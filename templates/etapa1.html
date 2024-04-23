@@ -58,6 +58,50 @@
                     <a href="etapa3">etapa 3</a>
                 </h2>
             </nav>
+            <div>
+                <form method="post" action='/submit_form'>
+                    <fieldset>
+                      
+                    </fieldset>
+                    <fieldset>
+                     
+                    </fieldset>
+                    <fieldset>
+                      <label for="categoria">Insira a categoria desejada
+                        <select id="categoria" name="categoria">
+                          <option value="">(select one)</option>
+                          <option value="roupa">Roupa</option>
+                          <option value="calcado">Calçados</option>
+                          <option value="bola">Bolas</option>
+                          <option value="outro">Outros</option>
+                        </select>
+                      </label>
+                      <label for="marca">Insira a marca desejada
+                        <select id="marca" name="marca">
+                          <option value="">(select one)</option>
+                          <option value="nike">Nike</option>
+                          <option value="adidas">Adidas</option>
+                          <option value="wilson">Wilson</option>
+                          <option value="outro">Outros</option>
+                        </select>
+                      </label>
+                      <label for="cor">Insira a cor desejada
+                        <select id="cor" name="cor">
+                          <option value="">(select one)</option>
+                          <option value="multiplas">Cores Múltiplas</option>
+                          <option value="branco">Branco</option>
+                          <option value="preto">Preto</option>
+                          <option value="laranja">Laranja</option>
+                          <option value="outro">Outros</option>
+                        </select>
+                      </label>
+                    </fieldset>
+                    <input type="submit" value="Submit" />
+                  </form>
+
+
+
+            </div>
             <div class="container text-center">
 
                 <h2> Exemplo:  {{ titulo}} </h2>
