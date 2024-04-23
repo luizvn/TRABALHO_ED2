@@ -60,13 +60,15 @@ def submit_form():
 
     return render_template('etapa1.html', catalogo = output)
 
-@app.route('/inserir')
+@app.route('/inserir', methods=['POST'])
 def inserir():
     try:
         with open('catalogo.json', 'r') as file:
             catalogo = json.load(file)
     except Exception as e:
         print(str(e))
+
+    nova_chave = str(max(int(k) for k in catalogo.keys()) + 1)
     
     categoria = request.form['categoria']
     tipo      = request.form['tipo']
@@ -75,17 +77,42 @@ def inserir():
     cor       = request.form['cor']
     valor     = request.form['valor']
     estoque   = request.form['estoque']
-    tamanhos_disponiveis = 'tamanho unico'
+    tamanhos_disponiveis = ['tamanho unico']
 
-    output = []
+    catalogo[nova_chave] = {'categoria':categoria, 'tipo':tipo, 'marca':marca, 'modelo':modelo, 'cor':cor, 'valor':valor, 'estoque':estoque, 'tamanhos_disponiveis':tamanhos_disponiveis}
 
-    output.append(categoria, tipo, marca, modelo, cor, valor, estoque, tamanhos_disponiveis)
 
-    return render_template('etapa1.html', catalogo = output)
+   # output.append(categoria, tipo, marca, modelo, cor, valor, estoque, tamanhos_disponiveis)
 
-@app.route('/deletar')
+    try:
+        with open('catalogo.json', 'w', encoding="utf-8") as arquivo:
+            json.dump(catalogo, arquivo)
+    except Exception as e:
+        print(str(e))
+
+    return render_template('etapa1.html', catalogo = catalogo)
+
+@app.route('/deletar', methods=['POST'])
 def deletar():
-    pass
+
+    try:
+        with open('catalogo.json', 'r') as file:
+            catalogo = json.load(file)
+    except Exception as e:
+        print(str(e))
+
+    id = request.form['id']
+
+    if id in catalogo.keys():
+        removido = catalogo.pop(id)
+    print(removido)
+    try:
+        with open('catalogo.json', 'w', encoding="utf-8") as arquivo:
+            json.dump(catalogo, arquivo)
+    except Exception as e:
+        print(str(e))
+
+    return render_template('etapa1.html', catalogo = catalogo)
 
 
 @app.route('/etapa2')

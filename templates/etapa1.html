@@ -121,7 +121,7 @@
                 
                 </table>
 
-                <form method="post", action="">
+                <form method="post", action="/inserir">
                     <fieldset>
                         <label for="categoria">Insira a categoria: <input id="categoria" name="categoria" type="text" required /></label>
                         <label for="tipo">Insira o tipo: <input id="tipo" name="tipo" type="text" required /></label>
@@ -131,6 +131,13 @@
                         <label for="valor">Insira o valor: <input id="valor" name="valor" type="number" required></label> 
                         <label for="estoque">Insira o estoque: <input id="estoque" name="estoque" type="number" required></label>
                         
+                    </fieldset>
+                    <input type="submit" value="Submit" />
+                </form>
+
+                <form method="post", action="/deletar">
+                    <fieldset>
+                        <label for="id">Insira o ID que deseja remover: <input id="id" name="id" type="text" required /></label>  
                     </fieldset>
                     <input type="submit" value="Submit" />
                 </form>
