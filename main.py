@@ -35,28 +35,13 @@ def submit_form():
     marca = request.form['marca']
     cor = request.form['cor']
 
-    output = []
+    output = {}
 
-    for produto in catalogo:
-        if categoria in produto['categoria']:
-            if marca in produto['marca']:
-                if cor in produto['cor']:
-                    output.append(produto)
-                elif cor == '':
-                    output.append(produto)
-            elif marca == '':
-                if cor in produto['cor']:
-                    output.append(produto)
-        else:
-            if categoria == '':
-                if marca in produto['marca']:
-                    if cor in produto['cor']:
-                        output.append(produto)
-                    elif cor == '':
-                        output.append(produto)
-                elif marca == '':
-                    if cor in produto['cor']:
-                        output.append(produto)
+    for produto,detalhes in catalogo.items():
+        if (not categoria or detalhes['categoria'] == categoria) and \
+           (not marca or detalhes['marca'] == marca) and \
+           (not cor or detalhes['cor'] == cor):
+            output[produto] = detalhes
 
     return render_template('etapa1.html', catalogo = output)
 
