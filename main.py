@@ -99,6 +99,80 @@ def deletar():
 
     return render_template('etapa1.html', catalogo = catalogo)
 
+@app.route('/editar', methods=['POST'])
+def editar():
+    try:
+        with open('catalogo.json', 'r') as file:
+            catalogo = json.load(file)
+    except Exception as e:
+        print(str(e))
+    
+    id        = request.form['id']
+    categoria = request.form['categoria']
+    tipo      = request.form['tipo']
+    marca     = request.form['marca']
+    modelo    = request.form['modelo']
+    cor       = request.form['cor']
+    valor     = request.form['valor']
+    estoque   = request.form['estoque']
+    tamanhos_disponiveis = ['tamanho unico']
+
+    if id in catalogo:
+        existe = True
+    else:
+        existe = False
+
+    if existe == True:
+        for produto,detalhes in catalogo.items():
+            if produto == id:
+                if (not categoria):
+                    pass
+                else:
+                    detalhes['categoria'] = categoria
+
+                if(not tipo):
+                    pass
+                else:
+                    detalhes['tipo'] = tipo
+
+                if(not marca):
+                    pass
+                else:
+                    detalhes['marca'] = marca
+
+                if(not modelo):
+                    pass
+                else:
+                    detalhes['modelo'] = modelo
+
+                if(not cor):
+                    pass
+                else:
+                    detalhes['cor'] = cor
+
+                if(not valor):
+                    pass
+                else:
+                    detalhes['valor'] = valor
+
+                if(not estoque):
+                    pass
+                else:
+                    detalhes['estoque'] = estoque
+
+                if(not tamanhos_disponiveis):
+                    pass
+                else:
+                    detalhes['tamanhos_disponiveis'] = tamanhos_disponiveis
+            
+    try:
+        with open('catalogo.json', 'w', encoding="utf-8") as arquivo:
+            json.dump(catalogo, arquivo)
+    except Exception as e:
+        print(str(e))
+
+    return render_template('etapa1.html', catalogo = catalogo)
+
 
 @app.route('/etapa2')
 def sobre2():
