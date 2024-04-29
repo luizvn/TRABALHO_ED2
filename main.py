@@ -5,7 +5,7 @@ import gzip
 from io import BytesIO
 
 # inicializaçaõ
-app = Flask(__name__)
+app = Flask(__name__, static_folder='src')
 
 
 # rotas
@@ -16,7 +16,7 @@ def principal():
 
 @app.route('/etapa1')
 def sobre1():
-    titulo= "Catalogo"
+    titulo= "Catálogo"
 
     try:
         with open('catalogo.json', 'r') as file:

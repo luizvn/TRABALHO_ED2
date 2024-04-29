@@ -10,11 +10,22 @@
             background-color: rgb(197, 11, 11);
         }
         .titulo{
+            display: flex;
+            align-items: center;
+            align-content: center;
             background-color: black;
             color: white;
             margin: 0;
             padding-bottom: 20px;
             width: 100%;
+        }
+        .imagem_logo{
+            margin-top: 10px;
+            margin-right: 500px;
+        }
+        .texto{
+            margin-left: 20px;
+            text-align: center;
         }
         .nome{
             text-align: center;
@@ -47,9 +58,13 @@
     <div class="index">
         <main>
             <header  class="titulo">
-                <a href=""><img src="src/img/logo-home2.jpg" alt="Logo da Leão Imperial"></a>
-                <h1 class="nome">Royal Sports</h1>
-                <p class="aucunha">O Leão Imperial</p>
+                <div class="imagem_logo">
+                    <a href=""><img src="src/img/logo-home.png" alt="Logo da Leão Imperial" height="120"></a>
+                </div>
+                <div class="texto">
+                    <h1 class="nome">Royal Sports</h1>
+                    <p class="aucunha">O Leão Imperial</p>
+                </div>
             </header>
             <nav>
                 <h2>
