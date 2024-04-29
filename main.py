@@ -1,6 +1,8 @@
-from flask import Flask, url_for, render_template, request, jsonify
+from flask import Flask, url_for, render_template, request, jsonify, send_file
 import json
 import sys
+import gzip
+from io import BytesIO
 
 # inicializaçaõ
 app = Flask(__name__)
@@ -172,6 +174,33 @@ def editar():
         print(str(e))
 
     return render_template('etapa1.html', catalogo = catalogo)
+
+@app.route('/download', methods=['GET'])
+def download():
+    try:
+        with open('catalogo.json', 'r') as file:
+            catalogo = json.load(file)
+    except Exception as e:
+        print(str(e))
+    
+    # Comprimindo os dados JSON
+    catalogo_comprimido = compress_json(catalogo)
+
+    # Criando um arquivo de memória para armazenar os dados comprimidos
+    compressed_file = BytesIO()
+    compressed_file.write(catalogo_comprimido)
+    compressed_file.seek(0)
+
+    # Enviando o arquivo comprimido para o cliente como uma resposta de download
+    return send_file(compressed_file, as_attachment=True, download_name='catalogo.json.gz')
+
+def compress_json(json_data):
+    # Comprimindo os dados JSON
+    with BytesIO() as compressed_file:
+        with gzip.GzipFile(fileobj=compressed_file, mode='wb') as f:
+            json_str = json.dumps(json_data)
+            f.write(json_str.encode('utf-8'))
+        return compressed_file.getvalue()
 
 
 @app.route('/etapa2')
