@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Etapa 1</title>
-
+    <title>Leão Imperial</title>
+    <link rel="icon" href="src/img/logo-home.png" type="image/png">
     <style>
         /* BODY */
         body{
@@ -102,6 +102,7 @@
                 </h2>
             </nav>
             <div>
+                <h3>Formulário de Busca</h3>
                 <form method="post" action='/submit_form'>
                     <fieldset>
                         <label for="categoria">Insira a categoria desejada
@@ -189,7 +190,7 @@
                 
                     </table>
                 </fieldset>
-
+                <h3>Inserir Produto no Catálogo</h3>
                 <form method="post", action="/inserir">
                     <fieldset>
                         <label for="categoria">Insira a categoria: <input id="categoria" name="categoria" type="text" required /></label>
@@ -204,12 +205,14 @@
                     <input type="submit" value="Submit" />
                 </form>
 
+                <h3>Deletar Produto do Catálogo</h3>
                 <form method="post", action="/deletar">
                     <fieldset>
                         <label for="id">Insira o ID que deseja remover: <input id="id" name="id" type="text" required /></label>  
                     </fieldset>
                     <input type="submit" value="Submit" />
                 </form>
+                <h3>Editar Produto do Catálogo</h3>
                 <form method="post", action="/editar">
                     <fieldset>
                         <label for="id">Insira o ID: <input id="id" name="id" type="text" required /></label>
@@ -223,7 +226,7 @@
                     </fieldset>
                     <input type="submit" value="Submit">
                 </form>
-                <h3>Download de Arquivo Comprimido</h3>
+                <h3>Download do Catálogo Comprimido</h3>
         <form action="/download" method="get">
             <button type="submit">Baixar Arquivo</button>
         </form>
