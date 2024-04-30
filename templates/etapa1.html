@@ -79,7 +79,69 @@
         /*td, th {
             padding: 10px; /* Aumenta o espaço interno dentro das células 
         } */
+
+        /* FORMS */
+        form {
+            font-family: Arial, sans-serif; /* Escolha uma fonte adequada para o formulário */
+        }
             
+        /*input[type="text"], input[type="number"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }*/
+
+        input[type="submit"] {
+            padding: 8px 15px;
+            background-color: #3d0901;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .row label {
+            flex-basis: calc(50% - 5px); /* Define a largura de cada label para ocupar metade da linha */
+        }
+
+        .row input {
+            flex-basis: calc(50% - 5px); /* Define a largura de cada input para ocupar metade da linha */
+        }
+
+        /*label{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }*/
+
+        /*label input {
+            flex: 1;
+            margin-left: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        } */
+
+        input:focus, textarea {
+            outline: none;
+            border-color: #ab3702; /* Cor quando o input recebe foco */
+            box-shadow: 0 0 5px rgba(180, 29, 3, 0.5); /* Sombra quando o input recebe foco */
+        }
+
+               
+
     </style>
 </head>
 <body>
@@ -193,14 +255,16 @@
                 <h3>Inserir Produto no Catálogo</h3>
                 <form method="post", action="/inserir">
                     <fieldset>
-                        <label for="categoria">Insira a categoria: <input id="categoria" name="categoria" type="text" required /></label>
-                        <label for="tipo">Insira o tipo: <input id="tipo" name="tipo" type="text" required /></label>
-                        <label for="marca">Insira a marca: <input id="marca" name="marca" type="text" required /></label>
-                        <label for="modelo">Insira o modelo: <input id="modelo" name="modelo" type="text" required /></label>
-                        <label for="cor">Insira a cor: <input id="cor" name="cor" type="text" required> </label>
-                        <label for="valor">Insira o valor: <input id="valor" name="valor" type="number" required></label> 
-                        <label for="estoque">Insira o estoque: <input id="estoque" name="estoque" type="number" required></label>
-                        
+                        <div class="row">
+                            <label for="categoria">Insira a categoria: <input id="categoria" name="categoria" type="text" required /></label>
+                            <label for="tipo">Insira o tipo: <input id="tipo" name="tipo" type="text" required /></label>
+                            <label for="marca">Insira a marca: <input id="marca" name="marca" type="text" required /></label>
+                            <label for="modelo">Insira o modelo: <input id="modelo" name="modelo" type="text" required /></label>
+                            <label for="cor">Insira a cor: <input id="cor" name="cor" type="text" required> </label>
+                            <label for="valor">Insira o valor: <input id="valor" name="valor" type="number" required></label> 
+                            <label for="estoque">Insira o estoque: <input id="estoque" name="estoque" type="number" required></label>
+                        </div>
+                       
                     </fieldset>
                     <input type="submit" value="Submit" />
                 </form>
@@ -215,14 +279,16 @@
                 <h3>Editar Produto do Catálogo</h3>
                 <form method="post", action="/editar">
                     <fieldset>
-                        <label for="id">Insira o ID: <input id="id" name="id" type="text" required /></label>
-                        <label for="categoria">Insira a categoria: <input id="categoria" name="categoria" type="text"/></label>
-                        <label for="tipo">Insira o tipo: <input id="tipo" name="tipo" type="text"/></label>
-                        <label for="marca">Insira a marca: <input id="marca" name="marca" type="text"/></label>
-                        <label for="modelo">Insira o modelo: <input id="modelo" name="modelo" type="text"/></label>
-                        <label for="cor">Insira a cor: <input id="cor" name="cor" type="text" /> </label>
-                        <label for="valor">Insira o valor: <input id="valor" name="valor" type="number" /></label> 
-                        <label for="estoque">Insira o estoque: <input id="estoque" name="estoque" type="number" /></label>
+                        <div class="row">
+                            <label for="id">Insira o ID: <input id="id" name="id" type="text" required /></label>
+                            <label for="categoria">Insira a categoria: <input id="categoria" name="categoria" type="text"/></label>
+                            <label for="tipo">Insira o tipo: <input id="tipo" name="tipo" type="text"/></label>
+                            <label for="marca">Insira a marca: <input id="marca" name="marca" type="text"/></label>
+                            <label for="modelo">Insira o modelo: <input id="modelo" name="modelo" type="text"/></label>
+                            <label for="cor">Insira a cor: <input id="cor" name="cor" type="text" /> </label>
+                            <label for="valor">Insira o valor: <input id="valor" name="valor" type="number" /></label> 
+                            <label for="estoque">Insira o estoque: <input id="estoque" name="estoque" type="number" /></label>
+                        </div>
                     </fieldset>
                     <input type="submit" value="Submit">
                 </form>
