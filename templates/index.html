@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Royal Sports</title>
     <link rel="icon" href="src/img/logo-home.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
         body{
@@ -53,6 +54,82 @@
             margin: 20px;
         }
 
+        /* CABEÇALHO */
+
+        ul {
+            list-style: none; /* Remove bullet points */
+            padding: 0; /* Remove padding */
+            margin: 0; /* Remove margin */
+        }
+
+        .item {
+            display: inline-block; /* Make li elements inline-block */
+            margin: 0; /* Ensure no additional margins */
+            padding: 0; /* Ensure no additional padding */
+            position: relative; /* Ensure proper positioning for pseudo-elements */
+        }
+
+        .item a{
+            display: block;
+            width: 3.2rem;
+            height: 3.2rem;
+            background-color: #191919;
+            border: 3px solid #191919;
+            overflow: hidden;
+            z-index: 1;
+            border-radius: 50%;
+            text-align: center; /* Center the icon horizontally */
+            line-height: 4.0rem; /* Vertically center the icon */
+            position: relative;
+        }
+
+        .item a::before{
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            z-index: 0;
+            scale: (1, 0);
+            transform-origin: bottom;
+            transition: scale 0.5s ease;
+            border-radius: 50%; /* Ensure the pseudo-element is also a circle */
+        }
+
+        .item :hover a::before{
+            scale: (1, 1);
+            transform: rotateX(360deg);
+        }
+
+        .icon{
+            font-size: 2rem;
+            color: hsl(0, 0%, 100%);
+            transition: 0.5s ease;
+            z-index: 2;
+            position: relative;
+        }
+
+        .item.in a:hover .icon {
+            transition: color 0.5s ease 0.5s; /* Delay the color change */
+            color: aqua; /* Change the icon color to aqua */
+        }
+
+        .item a:hover .icon{
+            color: #d60404;
+            transform: rotateY(360deg);
+        }
+
+        
+        
+        /*
+        .item:nth-child(2){
+            --bg-color: #0077b5;
+        }
+        
+        .item:nth-child(3){
+            --bg-color: #ff0000;
+        }
+        */
     </style>
 </head>
 <body>
@@ -75,14 +152,38 @@
                 </h2>
             </nav>
             
+            <aside>
+                aside
+            </aside>
             <section>
                 <h2></h2>Corpo + descrição da empresa
             </section>
+            <article>
+                article
+                <i class="fa fa-instagram"></i>
+            </article>
         </main>
         <footer class="cabecalho">
             <section>
                 <h2></h2>Cabeçalho
             </section>
+             
+            <section> <!-- REDES SOCIAIS -->
+                <ul>
+                    <li class="item"> 
+                        <a href="https://www.instagram.com/centauroesporte/">
+                            <i class="icon fa fa-instagram"></i>
+                        </a>
+                    </li>
+                    <li class="item"> 
+                        <a href="https://www.instagram.com/centauroesporte/">
+                            <i class="icon fa fa-linkedin in"></i>
+                        </a>
+                    </li>
+
+                </ul>
+            </section>
+            
         </footer>
     </div>  
 </body>
