@@ -3,6 +3,7 @@ import json
 import sys
 import gzip
 from io import BytesIO
+import arvoreB # Arvore B
 
 # inicializaçaõ
 app = Flask(__name__, static_folder='src')
