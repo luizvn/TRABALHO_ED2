@@ -1,102 +1,202 @@
-# Create a node
-class BTreeNode:
-  def __init__(self, leaf=False):
-    self.leaf = leaf
-    self.keys = []
-    self.child = []
- 
- 
-# Tree
-class BTree:
-  def __init__(self, t):
-    self.root = BTreeNode(True)
-    self.t = t
- 
-    # Insert node
-  def insert(self, k):
-    root = self.root
-    if len(root.keys) == (2 * self.t) - 1:
-      temp = BTreeNode()
-      self.root = temp
-      temp.child.insert(0, root)
-      self.split_child(temp, 0)
-      self.insert_non_full(temp, k)
-    else:
-      self.insert_non_full(root, k)
- 
-    # Insert nonfull
-  def insert_non_full(self, x, k):
-    i = len(x.keys) - 1
-    if x.leaf:
-      x.keys.append((None, None))
-      while i >= 0 and k[0] < x.keys[i][0]:
-        x.keys[i + 1] = x.keys[i]
-        i -= 1
-      x.keys[i + 1] = k
-    else:
-      while i >= 0 and k[0] < x.keys[i][0]:
-        i -= 1
-      i += 1
-      if len(x.child[i].keys) == (2 * self.t) - 1:
-        self.split_child(x, i)
-        if k[0] > x.keys[i][0]:
-          i += 1
-      self.insert_non_full(x.child[i], k)
- 
-    # Split the child
-  def split_child(self, x, i):
-    t = self.t
-    y = x.child[i]
-    z = BTreeNode(y.leaf)
-    x.child.insert(i + 1, z)
-    x.keys.insert(i, y.keys[t - 1])
-    z.keys = y.keys[t: (2 * t) - 1]
-    y.keys = y.keys[0: t - 1]
-    if not y.leaf:
-      z.child = y.child[t: 2 * t]
-      y.child = y.child[0: t - 1]
- 
-  # Print the tree
-  def print_tree(self, x, l=0):
-    print("Level ", l, " ", len(x.keys), end=":")
-    for i in x.keys:
-      print(i, end=" ")
-    print()
-    l += 1
-    if len(x.child) > 0:
-      for i in x.child:
-        self.print_tree(i, l)
- 
-  # Search key in the tree
-  def search_key(self, k, x=None):
-    if x is not None:
-      i = 0
-      while i < len(x.keys) and k > x.keys[i][0]:
-        i += 1
-      if i < len(x.keys) and k == x.keys[i][0]:
-        return (x, i)
-      elif x.leaf:
-        return None
-      else:
-        return self.search_key(k, x.child[i])
-       
-    else:
-      return self.search_key(k, self.root)
- 
- 
-def main():
-  B = BTree(3)
- 
-  for i in range(10):
-    B.insert((i, 2 * i))
- 
-  B.print_tree(B.root)
- 
-  if B.search_key(8) is not None:
-    print("\nFound")
+import pandas as pd #pip install pandas
+import openpyxl #pip install openpyxl
+from openpyxl import load_workbook
+from openpyxl.styles import Font
+from openpyxl.chart import BarChart, Reference
+import string
+
+#Declaração das classes e definição do grau da árvore
+class Registro:
+  def __init__(self):
+    self.Chave = None
+    self.Elemento = None
+
+class Pagina:
+  def __init__(self, ordem):
+    self.n = 0
+    self.r = [None for i in range(ordem)]
+    self.p = [None for i in range(ordem+1)]
+
+#Pesquisa
+def Pesquisa(x, Ap):
+  i = 1
+  if (Ap == None):
+    print("Registro não está presente na árvore\n")
+    return None
+
+  while (i < Ap.n and x.Chave > Ap.r[i - 1].Chave):
+    i += 1
+  if (x.Chave == Ap.r[i - 1].Chave):
+    x = Ap.r[i - 1]
+    return x
+
+  if (x.Chave < Ap.r[i - 1].Chave):
+    x = Pesquisa(x, Ap.p[i - 1])
   else:
-    print("\nNot Found")
- 
- 
-if __name__ == '__main__':
-  main()
+    x = Pesquisa(x, Ap.p[i])
+
+  return x
+
+#Funções de inserção
+
+#Insere o registro na página escolhida
+def _InsereNaPagina(Ap, Reg, ApDir):
+  k = Ap.n
+  NaoAchouPosicao = (k > 0)
+  while (NaoAchouPosicao):
+    if ( Reg.Chave >= Ap.r[k - 1].Chave ):
+      NaoAchouPosicao = False
+      break
+    Ap.r[k] = Ap.r[k - 1]
+    Ap.p[k + 1] = Ap.p[k]
+    k-= 1
+    if (k < 1):
+      NaoAchouPosicao = False
+
+  Ap.r[k] = Reg
+  Ap.p[k + 1] = ApDir
+  Ap.n += 1
+
+#Busca a página onde o registro será inserido e controla a divisão de páginas por Overflow
+def _Ins( Reg, Ap, Cresceu, RegRetorno, ApRetorno, Ordem ):
+  i = 1
+  J = None
+  if (Ap == None):
+    Cresceu = True
+    RegRetorno = Reg
+    ApRetorno = None
+    return Cresceu, RegRetorno, ApRetorno
+
+  while ( i < Ap.n and Reg.Chave > Ap.r[i - 1].Chave ):
+    i+= 1
+
+  if(Reg.Chave == Ap.r[i - 1].Chave):
+    print(" Erro: Registro já está presente\n")
+    Cresceu = False
+    return Cresceu, RegRetorno, ApRetorno
+
+  if(Reg.Chave < Ap.r[i - 1].Chave ):
+    i-= 1
+
+  Cresceu, RegRetorno, ApRetorno = _Ins(Reg, Ap.p[i], Cresceu, RegRetorno, ApRetorno, Ordem)
+
+  if(not Cresceu):
+    return Cresceu, RegRetorno, ApRetorno
+  if (Ap.n < Ordem): # Página tem espaco
+    _InsereNaPagina(Ap, RegRetorno, ApRetorno)
+    Cresceu = False
+    return Cresceu, RegRetorno, ApRetorno
+
+  # Overflow: Página tem que ser dividida /
+  ApTemp = Pagina(Ordem)
+  ApTemp.n = 0
+  ApTemp.p[0] = None
+  if (i < (Ordem//2) + 1):
+    _InsereNaPagina(ApTemp, Ap.r[Ordem - 1], Ap.p[Ordem])
+    Ap.n-= 1
+    _InsereNaPagina(Ap, RegRetorno, ApRetorno)
+  else:
+    _InsereNaPagina(ApTemp, RegRetorno, ApRetorno)
+  for J in range((Ordem//2) + 2, Ordem + 1):
+    _InsereNaPagina(ApTemp, Ap.r[J - 1], Ap.p[J])
+  Ap.n = (Ordem//2)
+  ApTemp.p[0] = Ap.p[(Ordem//2) + 1]
+  RegRetorno = Ap.r[(Ordem//2)]
+  ApRetorno = ApTemp
+  return Cresceu, RegRetorno, ApRetorno
+
+#Cria página da nova raiz caso a árvore cresça em altura
+def _Insere(Reg, Ap, Ordem):
+  Cresceu = False
+  RegRetorno = Registro()
+  ApRetorno = Pagina(Ordem)
+  Cresceu, RegRetorno, ApRetorno = _Ins(Reg, Ap, Cresceu, RegRetorno, ApRetorno, Ordem)
+  if (Cresceu):
+    ApTemp = Pagina(Ordem)
+    ApTemp.n = 1
+    ApTemp.r[0] = RegRetorno
+    ApTemp.p[1] = ApRetorno
+    ApTemp.p[0] = Ap
+    Ap = ApTemp
+  return Ap
+  
+#Insere elementos do arquivo
+def _InserirElementos(Ap, ordem, dataframe, chave):
+  tam_lin, tam_col = dataframe.shape
+  for i in range(tam_lin):
+      reg = Registro()
+      reg.Chave = dataframe.iloc[i, 0]
+      reg.Elemento = i
+      Ap = _Insere(reg, Ap, ordem)
+      chave += 1
+  return Ap, chave
+
+#Define os registros a serem inseridos
+def Inserir(Ap, chave):
+  ordem = int(input("Digite a ordem da árvore:"))
+  arq = input("Digite o nome do arquivo:")
+  if arq.lower().endswith(".csv"):
+    dataframe = pd.read_csv(arq, header=None)      
+  elif arq.lower().endswith((".xls", ".xlsx")):
+    dataframe = pd.read_excel(arq, header=None)
+  else:
+    print ("Arquivo incompatível.")
+  #imprimindo dataframe criado do arquivo
+  print("\nDataframe")
+  print(dataframe)
+  a = input("Digite um carater para continuar")
+  Ap, chave = _InserirElementos(Ap, ordem, dataframe, chave)
+  return Ap, chave, dataframe
+
+#Impressão
+
+def Imprime(Ap):
+  if (Ap != None):
+    i = 0
+    while i < Ap.n:
+      Imprime(Ap.p[i])
+      print(Ap.r[i].Chave, "-", Ap.r[i].Elemento)
+      i += 1
+    Imprime(Ap.p[i])
+
+def ImprimeMenor(x, Ap):
+  if (Ap != None):
+    i = 0
+    while i < Ap.n:
+      ImprimeMenor(x, Ap.p[i])
+      if (Ap.r[i].Chave < x.Chave):
+        print(Ap.r[i].Chave, "-", Ap.r[i].Elemento)
+      i += 1
+    ImprimeMenor(x, Ap.p[i])
+
+def ImprimeMaior(x, Ap):
+  if (Ap != None):
+    i = 0
+    while i < Ap.n:
+      ImprimeMaior(x, Ap.p[i])
+      if (Ap.r[i].Chave > x.Chave):
+        print(Ap.r[i].Chave, "-", Ap.r[i].Elemento)
+      i += 1
+    ImprimeMaior(x, Ap.p[i])
+    
+#Impressão Arquivo Completo
+#obtenção da chave na árvoreB e restante dos dados do DataFrame
+def ImprimeMenorDataFrame(x, Ap, df):
+  if (Ap != None):
+    i = 0
+    while i < Ap.n:
+      ImprimeMenorDataFrame(x, Ap.p[i],df)
+      if (Ap.r[i].Chave < x.Chave):
+        print(df.iloc[Ap.r[i].Elemento])
+      i += 1
+    ImprimeMenorDataFrame(x, Ap.p[i], df)
+
+def ImprimeMaiorDataFrame(x, Ap, df):
+  if (Ap != None):
+    i = 0
+    while i < Ap.n:
+      ImprimeMaiorDataFrame(x, Ap.p[i],df)
+      if (Ap.r[i].Chave > x.Chave):
+        print(df.iloc[ Ap.r[i].Elemento])
+      i += 1
+    ImprimeMaiorDataFrame(x, Ap.p[i],df)
