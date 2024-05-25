@@ -1,8 +1,8 @@
 import pandas as pd #pip install pandas
-import openpyxl #pip install openpyxl
+'''import openpyxl #pip install openpyxl
 from openpyxl import load_workbook
 from openpyxl.styles import Font
-from openpyxl.chart import BarChart, Reference
+from openpyxl.chart import BarChart, Reference'''
 import string
 
 #Declaração das classes e definição do grau da árvore
@@ -134,13 +134,17 @@ def _InserirElementos(Ap, ordem, dataframe, chave):
 #Define os registros a serem inseridos
 def Inserir(Ap, chave):
   ordem = int(input("Digite a ordem da árvore:"))
-  arq = input("Digite o nome do arquivo:")
-  if arq.lower().endswith(".csv"):
-    dataframe = pd.read_csv(arq, header=None)      
-  elif arq.lower().endswith((".xls", ".xlsx")):
-    dataframe = pd.read_excel(arq, header=None)
+  arq = 'catalogo.json'
+  if arq.lower().endswith(".json"):
+    dataframe = pd.read_json(arq)
   else:
     print ("Arquivo incompatível.")
+
+  '''if arq.lower().endswith(".csv"):
+    dataframe = pd.read_csv(arq, header=None)      
+  elif arq.lower().endswith((".xls", ".xlsx")):
+    dataframe = pd.read_excel(arq, header=None)'''
+  
   #imprimindo dataframe criado do arquivo
   print("\nDataframe")
   print(dataframe)

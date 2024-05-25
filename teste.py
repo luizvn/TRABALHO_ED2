@@ -1,3 +1,7 @@
-import arvoreB
+import arvoreB as ab
 
-arvoreB.imprimir("oi")
+ap = None
+chave = 1
+
+ab.Inserir(ap, chave)
+ab.Imprime(ap)
