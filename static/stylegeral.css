@@ -1,0 +1,49 @@
+body{
+    background-color: rgb(197, 11, 11);
+}
+
+/* Header */
+.titulo{
+    display: flex;
+    align-items: center;
+    align-content: center;
+    background-color: black;
+    color: white;
+    margin: 0;
+    padding-bottom: 20px;
+    width: 100%;
+}
+.imagem_logo{
+    margin-top: 10px;
+    margin-right: 500px;
+}
+.texto{
+    margin-left: 20px;
+    text-align: center;
+}
+.nome{
+    text-align: center;
+    font-style: bold;
+    margin-bottom: 0;
+}
+.aucunha{
+    text-align: center;
+    font-style: italic;
+    margin-top: 5px;
+}
+
+/* NAVEGADOR DE PÁGINA */
+
+nav {
+    background-color: rgba(210, 77, 62, 0.7); 
+    padding: 1px;
+    text-align: center;
+}
+
+nav a{
+    background-color: darkred;
+    padding: 2px;
+    color: antiquewhite;
+    border: 2px solid rgb(221, 181, 181);
+    margin: 20px;
+}

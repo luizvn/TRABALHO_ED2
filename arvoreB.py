@@ -59,6 +59,7 @@ def _InsereNaPagina(Ap, Reg, ApDir):
 
 #Busca a página onde o registro será inserido e controla a divisão de páginas por Overflow
 def _Ins( Reg, Ap, Cresceu, RegRetorno, ApRetorno, Ordem ):
+  float(Reg.Chave)
   i = 1
   J = None
   if (Ap == None):
@@ -134,7 +135,7 @@ def _InserirElementos(Ap, ordem, dataframe, chave):
 #Define os registros a serem inseridos
 def Inserir(Ap, chave):
   ordem = int(input("Digite a ordem da árvore:"))
-  arq = 'catalogo.json'
+  arq = 'catalogo2.json'
   if arq.lower().endswith(".json"):
     dataframe = pd.read_json(arq)
   else:

@@ -9,7 +9,6 @@ import arvoreB # Arvore B
 app = Flask(__name__, static_folder='src')
 
 
-# rotas
 
 @app.route('/')
 def principal():
