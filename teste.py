@@ -1,36 +1,13 @@
-import arvoreB2 as ab
+'''import arvoreB2 as ab
 import arvoreB3 as ab3
 import json
-import pandas as pd
+import pandas as pd'''
+import arvoreB as ab
 
-arvoreB = ab3.BTree(2)
+ap = None
+chave = 1
 
-with open('catalogo.json', 'r') as file:
-        data = json.load(file) 
+(ap2, chave2, df) = ab.Inserir(ap, chave)
 
-'''arq = 'catalogo2.json'
-if arq.lower().endswith(".json"):
-    dataframe = pd.read_json(arq)'''
-
-arvoreB.load_from_json(data)
-
-arvoreB.traverse(data)
-a = input()
-result = arvoreB.search(5)
-if result:
-    print(f"Encontrado:  - {result}")
-else:
-    print(f"Não encontrado: {3}")
-
-result = arvoreB.search(6)
-if result:
-    print(f"Encontrado:  - {result}")
-else:
-    print(f"Não encontrado: {6}")
-result = arvoreB.search(7)
-if result:
-    print(f"Encontrado:  - {result}")
-else:
-    print(f"Não encontrado: {6}")
-
+ab.Imprime(ap2)
 

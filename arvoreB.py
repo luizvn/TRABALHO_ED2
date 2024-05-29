@@ -59,7 +59,7 @@ def _InsereNaPagina(Ap, Reg, ApDir):
 
 #Busca a página onde o registro será inserido e controla a divisão de páginas por Overflow
 def _Ins( Reg, Ap, Cresceu, RegRetorno, ApRetorno, Ordem ):
-  float(Reg.Chave)
+  #float(Reg.Chave)
   i = 1
   J = None
   if (Ap == None):
@@ -124,9 +124,9 @@ def _Insere(Reg, Ap, Ordem):
 #Insere elementos do arquivo
 def _InserirElementos(Ap, ordem, dataframe, chave):
   tam_lin, tam_col = dataframe.shape
-  for i in range(tam_lin):
+  for i in range(tam_col):
       reg = Registro()
-      reg.Chave = dataframe.iloc[i, 0]
+      reg.Chave = dataframe.iloc[0, i]
       reg.Elemento = i
       Ap = _Insere(reg, Ap, ordem)
       chave += 1
@@ -135,7 +135,7 @@ def _InserirElementos(Ap, ordem, dataframe, chave):
 #Define os registros a serem inseridos
 def Inserir(Ap, chave):
   ordem = int(input("Digite a ordem da árvore:"))
-  arq = 'catalogo2.json'
+  arq = 'catalogo.json'
   if arq.lower().endswith(".json"):
     dataframe = pd.read_json(arq)
   else:
@@ -149,6 +149,11 @@ def Inserir(Ap, chave):
   #imprimindo dataframe criado do arquivo
   print("\nDataframe")
   print(dataframe)
+
+  print("------------------------------------")
+  tam_lin, tam_col = dataframe.shape
+  print(tam_lin)
+  print(tam_col)
   a = input("Digite um carater para continuar")
   Ap, chave = _InserirElementos(Ap, ordem, dataframe, chave)
   return Ap, chave, dataframe
