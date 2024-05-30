@@ -1,0 +1,8 @@
+Registro: Representa um nó na árvore B.
+- Chave: Armazena a chave do registro (usada para ordenação e pesquisa).
+- Elemento: Armazena um valor associado ao registro.
+
+Pagina: Representa um nó ou página na árvore B.
+- n: Número de chaves atualmente armazenadas na página.
+- r: Lista de registros.
+- p: Lista de ponteiros para outras páginas (filhos).

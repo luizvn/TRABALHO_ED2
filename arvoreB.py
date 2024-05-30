@@ -158,7 +158,7 @@ def Inserir(Ap, chave):
   Ap, chave = _InserirElementos(Ap, ordem, dataframe, chave)
   return Ap, chave, dataframe
 
-#Impressão
+# =======| FUNÇÕES DE IMPRESSÃO |=======
 
 def Imprime(Ap):
   if (Ap != None):
@@ -169,25 +169,25 @@ def Imprime(Ap):
       i += 1
     Imprime(Ap.p[i])
 
-def ImprimeMenor(x, Ap):
+def ImprimeMenor(reg, Ap): # Imprime valores menores doq informado
   if (Ap != None):
     i = 0
     while i < Ap.n:
-      ImprimeMenor(x, Ap.p[i])
-      if (Ap.r[i].Chave < x.Chave):
+      ImprimeMenor(reg, Ap.p[i])
+      if (Ap.r[i].Chave < reg.Chave):
         print(Ap.r[i].Chave, "-", Ap.r[i].Elemento)
       i += 1
-    ImprimeMenor(x, Ap.p[i])
+    ImprimeMenor(reg, Ap.p[i])
 
-def ImprimeMaior(x, Ap):
+def ImprimeMaior(reg, Ap):
   if (Ap != None):
     i = 0
     while i < Ap.n:
-      ImprimeMaior(x, Ap.p[i])
-      if (Ap.r[i].Chave > x.Chave):
+      ImprimeMaior(reg, Ap.p[i])
+      if (Ap.r[i].Chave > reg.Chave):
         print(Ap.r[i].Chave, "-", Ap.r[i].Elemento)
       i += 1
-    ImprimeMaior(x, Ap.p[i])
+    ImprimeMaior(reg, Ap.p[i])
     
 #Impressão Arquivo Completo
 #obtenção da chave na árvoreB e restante dos dados do DataFrame
@@ -210,3 +210,13 @@ def ImprimeMaiorDataFrame(x, Ap, df):
         print(df.iloc[ Ap.r[i].Elemento])
       i += 1
     ImprimeMaiorDataFrame(x, Ap.p[i],df)
+
+def ImprimirEntreRegistro(regMenor, regMaior, Ap):
+  if Ap != None:
+    i = 0
+    while(i < Ap.n):
+      ImprimirEntreRegistro(regMenor, regMaior, Ap.p[i]) # Vai para a esquerda
+      if((Ap.r[i].Chave > regMenor.Chave) and (Ap.r[i].Chave < regMaior.Chave)):
+        print(f'{Ap.r[i].Chave} - {Ap.r[i].Elemento}')
+      i += 1
+    ImprimirEntreRegistro(regMenor, regMaior, Ap.p[i]) # Vai para a direita
