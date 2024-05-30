@@ -60,4 +60,6 @@ regMaior = ab.Registro()
 regMaior.Chave = 5
 ab.ImprimirEntreRegistro(regMenor, regMaior, ap2)
 
+print('======================')
 
+ab.ImprimirOrdemArvore(ap2)

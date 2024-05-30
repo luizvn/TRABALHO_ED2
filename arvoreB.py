@@ -220,3 +220,14 @@ def ImprimirEntreRegistro(regMenor, regMaior, Ap):
         print(f'{Ap.r[i].Chave} - {Ap.r[i].Elemento}')
       i += 1
     ImprimirEntreRegistro(regMenor, regMaior, Ap.p[i]) # Vai para a direita
+
+def ImprimirOrdemArvore(Ap):
+  if Ap != None:
+    i = 0
+    while i < Ap.n:
+      ImprimirOrdemArvore(Ap.p[i])
+      for j in range(len(Ap.p) - 1):
+        ImprimirOrdemArvore(Ap.p[j + 1])
+      print(f'{Ap.r[i].Chave} - {Ap.r[i].Elemento}')
+      i += 1
+
