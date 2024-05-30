@@ -11,3 +11,26 @@ chave = 1
 
 ab.Imprime(ap2)
 
+print('======================')
+
+reg = ab.Registro()
+reg.Chave = 4
+ab.ImprimeMaior(reg, ap2)
+
+print('======================')
+
+reg = ab.Registro()
+reg.Chave = 4
+ab.ImprimeMenor(reg, ap2)
+
+print('======================')
+
+reg = ab.Registro()
+reg.Chave = 4
+reg = ab.Pesquisa(reg, ap2)
+if reg != None:
+    print('entrou')
+    print(f'{reg.Chave} - {reg.Elemento}')
+else:
+    print('erro!')
+

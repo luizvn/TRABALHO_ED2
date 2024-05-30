@@ -124,9 +124,9 @@ def _Insere(Reg, Ap, Ordem):
 #Insere elementos do arquivo
 def _InserirElementos(Ap, ordem, dataframe, chave):
   tam_lin, tam_col = dataframe.shape
-  for i in range(tam_col):
+  for i in range(tam_lin):
       reg = Registro()
-      reg.Chave = dataframe.iloc[0, i]
+      reg.Chave = i
       reg.Elemento = i
       Ap = _Insere(reg, Ap, ordem)
       chave += 1
