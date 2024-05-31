@@ -3,7 +3,7 @@ import json
 import sys
 import gzip
 from io import BytesIO
-import arvoreB # Arvore B
+import arvoreB as ab# Arvore B
 
 # inicializaçaõ
 app = Flask(__name__, static_folder='src')
@@ -205,7 +205,41 @@ def compress_json(json_data):
 
 @app.route('/etapa2')
 def sobre2():
-    return render_template('etapa2.html')
+    titulo= "Catálogo"
+    try:
+        with open('catalogo.json', 'r') as file:
+            catalogo = json.load(file)
+    except Exception as e:
+        print(str(e))
+    return render_template('etapa2.html', titulo = titulo, catalogo = catalogo)
+
+def criarAB():
+    ap = None
+    chave = 1
+    return ab.Inserir(ap, chave)
+
+@app.route('/pesquisa', methods=['POST'])
+def pesquisa():
+    (ap2, chave2, df) = criarAB()
+    reg = ab.Registro()
+    reg.Chave = int(request.form['chave'])
+    encontrou = ab.Pesquisa(reg, ap2)
+    try:
+        with open('catalogo.json', 'r') as file:
+            catalogo = json.load(file)
+    except Exception as e:
+        print(str(e))
+
+    output = {}
+    tamanhos_disponiveis = ['tamanho unico']
+    if encontrou == None:
+        pass
+    else:
+        for detalhes in catalogo[str(encontrou.Chave)].items():
+            output[str(encontrou.Chave)] = {'categoria':detalhes['categoria'], 'tipo':detalhes['tipo'], 'marca':detalhes['marca'], 'modelo':detalhes['modelo'], 'cor':detalhes['cor'], 'valor':detalhes['valor'], 'estoque':detalhes['estoque'], 'tamanhos_disponiveis':tamanhos_disponiveis}
+        #catalogo = catalogo[str(encontrou.Chave)]
+    return render_template('etapa2.html', titulo = 'Catálogo', catalogo = output)
+
 
 @app.route('/etapa3')
 def sobre3():

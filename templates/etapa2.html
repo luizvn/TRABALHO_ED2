@@ -24,7 +24,68 @@
                     <a class="etapa3" href="etapa3">etapa 3</a>
                 </h2>
             </nav>
-            
+            <div class="container text-center">
+
+                <h2 class="titulo_tabela"> {{ titulo}} </h2>
+
+                <fieldset>
+                    <table class="table">
+                
+                        <thead>
+                            <tr> 
+                                <th>ID</th>
+                    
+                                <th>Categoria</th>
+
+                                <th>Tipo</th>
+
+                                <th>Marca</th>
+
+                                <th>Modelo</th>
+
+                                <th>Cor</th>
+
+                                <th>Valor</th>
+
+                                <th>Estoque</th>
+                            </tr>
+                        </thead>
+                    
+                        <tbody>
+                            {% for codigo, produto in catalogo.items()%}
+                                <tr>
+                                
+                                    <td>{{codigo}}</td>
+
+                                    <td>{{produto.categoria}}</td>
+                    
+                                    <td>{{produto.tipo}}</td>
+
+                                    <td>{{produto.marca}}</td>
+
+                                    <td>{{produto.modelo}}</td>
+
+                                    <td>{{produto.cor}}</td>
+
+                                    <td>{{produto.valor}}</td>
+
+                                    <td>{{produto.estoque}}</td>
+                                </tr>
+                            {%endfor%}
+                        </tbody>
+                
+                    </table>
+                </fieldset>
+            <h3>Pesquisar Produto no Catálogo</h3>
+                <form method="post", action="/pesquisa">
+                    <fieldset>
+                        <div class="row">
+                            <label for="chave">Insira o ID do produto desejado: <input id="chave" name="chave" type="number" required /></label>
+                        </div>
+                    </fieldset>
+                    <input type="submit" value="Submit" />
+                </form>
+            </div>
             <aside>
                 aside
             </aside>

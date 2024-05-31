@@ -134,7 +134,7 @@ def _InserirElementos(Ap, ordem, dataframe, chave):
 
 #Define os registros a serem inseridos
 def Inserir(Ap, chave):
-  ordem = int(input("Digite a ordem da árvore:"))
+  ordem = 2
   arq = 'catalogo.json'
   if arq.lower().endswith(".json"):
     dataframe = pd.read_json(arq)
@@ -151,10 +151,10 @@ def Inserir(Ap, chave):
   print(dataframe)
 
   print("------------------------------------")
-  tam_lin, tam_col = dataframe.shape
+  '''tam_lin, tam_col = dataframe.shape
   print(tam_lin)
-  print(tam_col)
-  a = input("Digite um carater para continuar")
+  print(tam_col)'''
+  #a = input("Digite um carater para continuar")
   Ap, chave = _InserirElementos(Ap, ordem, dataframe, chave)
   return Ap, chave, dataframe
 
