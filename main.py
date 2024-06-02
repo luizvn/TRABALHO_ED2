@@ -224,21 +224,32 @@ def pesquisa():
     reg = ab.Registro()
     reg.Chave = int(request.form['chave'])
     encontrou = ab.Pesquisa(reg, ap2)
+    
     try:
         with open('catalogo.json', 'r') as file:
             catalogo = json.load(file)
     except Exception as e:
         print(str(e))
-
+        catalogo = {}
     output = {}
-    tamanhos_disponiveis = ['tamanho unico']
-    if encontrou == None:
-        pass
+    if encontrou is not None:
+        chave_encontrada = str(encontrou.Elemento)
+        if chave_encontrada in catalogo:
+            detalhes = catalogo[chave_encontrada]
+            output[chave_encontrada] = {
+                'categoria': detalhes['categoria'],
+                'tipo': detalhes['tipo'],
+                'marca': detalhes['marca'],
+                'modelo': detalhes['modelo'],
+                'cor': detalhes['cor'],
+                'valor': detalhes['valor'],
+                'estoque': detalhes['estoque'],
+                'tamanhos_disponiveis': detalhes.get('tamanhos_disponiveis', ['tamanho unico'])
+            }
     else:
-        for detalhes in catalogo[str(encontrou.Chave)].items():
-            output[str(encontrou.Chave)] = {'categoria':detalhes['categoria'], 'tipo':detalhes['tipo'], 'marca':detalhes['marca'], 'modelo':detalhes['modelo'], 'cor':detalhes['cor'], 'valor':detalhes['valor'], 'estoque':detalhes['estoque'], 'tamanhos_disponiveis':tamanhos_disponiveis}
-        #catalogo = catalogo[str(encontrou.Chave)]
-    return render_template('etapa2.html', titulo = 'Catálogo', catalogo = output)
+        print('oi')
+
+    return render_template('etapa2.html', titulo='Catálogo', catalogo=output)
 
 
 @app.route('/etapa3')

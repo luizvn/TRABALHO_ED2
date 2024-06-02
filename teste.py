@@ -9,6 +9,7 @@ chave = 1
 
 (ap2, chave2, df) = ab.Inserir(ap, chave)
 
+
 ab.Imprime(ap2)
 
 print('======================')
@@ -26,7 +27,7 @@ ab.ImprimeMenor(reg, ap2)
 print('======================')
 
 reg = ab.Registro()
-reg.Chave = 4
+reg.Chave = 10
 reg = ab.Pesquisa(reg, ap2)
 if reg != None:
     print('entrou')

@@ -18,24 +18,24 @@ class Pagina:
     self.p = [None for i in range(ordem+1)]
 
 #Pesquisa
-def Pesquisa(x, Ap):
+def Pesquisa(reg, Ap):
   i = 1
   if (Ap == None):
     print("Registro não está presente na árvore\n")
     return None
 
-  while (i < Ap.n and x.Chave > Ap.r[i - 1].Chave):
+  while (i < Ap.n and reg.Chave > Ap.r[i - 1].Chave):
     i += 1
-  if (x.Chave == Ap.r[i - 1].Chave):
-    x = Ap.r[i - 1]
-    return x
+  if (reg.Chave == Ap.r[i - 1].Chave):
+    reg = Ap.r[i - 1]
+    return reg
 
-  if (x.Chave < Ap.r[i - 1].Chave):
-    x = Pesquisa(x, Ap.p[i - 1])
+  if (reg.Chave < Ap.r[i - 1].Chave):
+    reg = Pesquisa(reg, Ap.p[i - 1])
   else:
-    x = Pesquisa(x, Ap.p[i])
+    reg = Pesquisa(reg, Ap.p[i])
 
-  return x
+  return reg
 
 #Funções de inserção
 
@@ -124,10 +124,11 @@ def _Insere(Reg, Ap, Ordem):
 #Insere elementos do arquivo
 def _InserirElementos(Ap, ordem, dataframe, chave):
   tam_lin, tam_col = dataframe.shape
-  for i in range(tam_lin):
+  Lista_id = list(dataframe.columns)
+  for i in range(tam_col):
       reg = Registro()
-      reg.Chave = i
-      reg.Elemento = i
+      reg.Chave = Lista_id[i]
+      reg.Elemento = Lista_id[i]
       Ap = _Insere(reg, Ap, ordem)
       chave += 1
   return Ap, chave
