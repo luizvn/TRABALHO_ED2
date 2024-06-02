@@ -4,6 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Etapa 2</title>
+    <script>
+        function validateForm(event) {
+            // Obtendo os valores dos campos de input           
+            var idMenor = document.getElementById('idmenor').value;
+            var idMaior = document.getElementById('idmaior').value;
+
+            // Convertendo os valores para números
+            idMenor = Number(idMenor);
+            idMaior = Number(idMaior);
+
+            // Verificando se o valor de idMenor é menor que o valor de idMaior
+            if (idMenor >= idMaior) {
+                // Se não for, exibe uma mensagem de erro e impede o envio do formulário
+                alert("O valor do ID menor deve ser menor do que o valor do ID maior.");
+                event.preventDefault();
+            }
+        }
+
+        // Adiciona um listener para o evento de submit do formulário
+        window.onload = function() {
+            document.getElementById('consultaForm').addEventListener('submit', validateForm);
+        };
+    </script>
 </head>
 <body>
     <div class="index">
@@ -76,11 +99,42 @@
                 
                     </table>
                 </fieldset>
+            <form action="/imprime_ordem" method="get">
+                <button type="submit">Ordem</button>
+            </form>
             <h3>Pesquisar Produto no Catálogo</h3>
                 <form method="post", action="/pesquisa">
                     <fieldset>
                         <div class="row">
                             <label for="chave">Insira o ID do produto desejado: <input id="chave" name="chave" type="number" required /></label>
+                        </div>
+                    </fieldset>
+                    <input type="submit" value="Submit" />
+                </form>
+            <h3>Pesquisar Produtos Com IDs Menores Que O Inserido</h3>
+                <form method="post", action="/imprime_menor">
+                    <fieldset>
+                        <div class="row">
+                            <label for="id">Consultar ID menor que: <input id="id" name="id" type="number" required /></label>
+                        </div>
+                    </fieldset>
+                    <input type="submit" value="Submit" />
+                </form>
+            <h3>Pesquisar Produtos Com IDs Maiores Que O Inserido</h3>
+                <form method="post", action="/imprime_maior">
+                    <fieldset>
+                        <div class="row">
+                            <label for="id">Consultar ID maior que: <input id="id" name="id" type="number" required /></label>
+                        </div>
+                    </fieldset>
+                    <input type="submit" value="Submit" />
+                </form>
+            <h3>Pesquisar Produtos Com IDs Maiores Que O Inserido</h3>
+                <form method="post", action="/imprime_entre" id="consultaForm">
+                    <fieldset>
+                        <div class="row">         
+                            <label for="idmenor">Consultar ID maior que: <input id="idmenor" name="idmenor" type="number" required /></label>                  
+                            <label for="idmaior">Consultar ID menor que: <input id="idmaior" name="idmaior" type="number" required /></label> 
                         </div>
                     </fieldset>
                     <input type="submit" value="Submit" />

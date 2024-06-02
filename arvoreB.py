@@ -4,6 +4,7 @@ from openpyxl import load_workbook
 from openpyxl.styles import Font
 from openpyxl.chart import BarChart, Reference'''
 import string
+import json
 
 #Declaração das classes e definição do grau da árvore
 class Registro:
@@ -161,34 +162,85 @@ def Inserir(Ap, chave):
 
 # =======| FUNÇÕES DE IMPRESSÃO |=======
 
-def Imprime(Ap):
+def Imprime(Ap, lista):
+  try:
+    with open('catalogo.json', 'r') as file:
+      catalogo = json.load(file)
+  except Exception as e:
+    print(str(e))
   if (Ap != None):
     i = 0
     while i < Ap.n:
-      Imprime(Ap.p[i])
+      Imprime(Ap.p[i], lista)
+      detalhes = catalogo[str(Ap.r[i].Chave)]
+      lista[str(Ap.r[i].Chave)] = {
+                'categoria': detalhes['categoria'],
+                'tipo': detalhes['tipo'],
+                'marca': detalhes['marca'],
+                'modelo': detalhes['modelo'],
+                'cor': detalhes['cor'],
+                'valor': detalhes['valor'],
+                'estoque': detalhes['estoque'],
+                'tamanhos_disponiveis': detalhes.get('tamanhos_disponiveis', ['tamanho unico'])
+            }
       print(Ap.r[i].Chave, "-", Ap.r[i].Elemento)
       i += 1
-    Imprime(Ap.p[i])
+    Imprime(Ap.p[i], lista)
+    return lista
 
-def ImprimeMenor(reg, Ap): # Imprime valores menores doq informado
+def ImprimeMenor(reg, Ap, lista): # Imprime valores menores doq informado
+  try:
+    with open('catalogo.json', 'r') as file:
+      catalogo = json.load(file)
+  except Exception as e:
+    print(str(e))
   if (Ap != None):
     i = 0
     while i < Ap.n:
-      ImprimeMenor(reg, Ap.p[i])
+      ImprimeMenor(reg, Ap.p[i], lista)
       if (Ap.r[i].Chave < reg.Chave):
+        detalhes = catalogo[str(Ap.r[i].Chave)]
+        lista[str(Ap.r[i].Chave)] = {
+                'categoria': detalhes['categoria'],
+                'tipo': detalhes['tipo'],
+                'marca': detalhes['marca'],
+                'modelo': detalhes['modelo'],
+                'cor': detalhes['cor'],
+                'valor': detalhes['valor'],
+                'estoque': detalhes['estoque'],
+                'tamanhos_disponiveis': detalhes.get('tamanhos_disponiveis', ['tamanho unico'])
+            }
         print(Ap.r[i].Chave, "-", Ap.r[i].Elemento)
       i += 1
-    ImprimeMenor(reg, Ap.p[i])
+    ImprimeMenor(reg, Ap.p[i], lista)
+  return lista
 
-def ImprimeMaior(reg, Ap):
+def ImprimeMaior(reg, Ap, lista):
+  try:
+    with open('catalogo.json', 'r') as file:
+      catalogo = json.load(file)
+  except Exception as e:
+    print(str(e))
   if (Ap != None):
     i = 0
     while i < Ap.n:
-      ImprimeMaior(reg, Ap.p[i])
+      ImprimeMaior(reg, Ap.p[i], lista)
       if (Ap.r[i].Chave > reg.Chave):
+        detalhes = catalogo[str(Ap.r[i].Chave)]
+        lista[str(Ap.r[i].Chave)] = {
+                'categoria': detalhes['categoria'],
+                'tipo': detalhes['tipo'],
+                'marca': detalhes['marca'],
+                'modelo': detalhes['modelo'],
+                'cor': detalhes['cor'],
+                'valor': detalhes['valor'],
+                'estoque': detalhes['estoque'],
+                'tamanhos_disponiveis': detalhes.get('tamanhos_disponiveis', ['tamanho unico'])
+            }
         print(Ap.r[i].Chave, "-", Ap.r[i].Elemento)
       i += 1
-    ImprimeMaior(reg, Ap.p[i])
+    ImprimeMaior(reg, Ap.p[i], lista)
+  return lista
     
 #Impressão Arquivo Completo
 #obtenção da chave na árvoreB e restante dos dados do DataFrame
@@ -212,17 +264,34 @@ def ImprimeMaiorDataFrame(x, Ap, df):
       i += 1
     ImprimeMaiorDataFrame(x, Ap.p[i],df)
 
-def ImprimirEntreRegistro(regMenor, regMaior, Ap):
+def ImprimirEntreRegistro(regMenor, regMaior, Ap, lista):
+  try:
+    with open('catalogo.json', 'r') as file:
+      catalogo = json.load(file)
+  except Exception as e:
+    print(str(e))
   if Ap != None:
     i = 0
     while(i < Ap.n):
-      ImprimirEntreRegistro(regMenor, regMaior, Ap.p[i]) # Vai para a esquerda
+      ImprimirEntreRegistro(regMenor, regMaior, Ap.p[i], lista) # Vai para a esquerda
       if((Ap.r[i].Chave > regMenor.Chave) and (Ap.r[i].Chave < regMaior.Chave)):
+        detalhes = catalogo[str(Ap.r[i].Chave)]
+        lista[str(Ap.r[i].Chave)] = {
+                'categoria': detalhes['categoria'],
+                'tipo': detalhes['tipo'],
+                'marca': detalhes['marca'],
+                'modelo': detalhes['modelo'],
+                'cor': detalhes['cor'],
+                'valor': detalhes['valor'],
+                'estoque': detalhes['estoque'],
+                'tamanhos_disponiveis': detalhes.get('tamanhos_disponiveis', ['tamanho unico'])
+            }
         print(f'{Ap.r[i].Chave} - {Ap.r[i].Elemento}')
       i += 1
-    ImprimirEntreRegistro(regMenor, regMaior, Ap.p[i]) # Vai para a direita
+    ImprimirEntreRegistro(regMenor, regMaior, Ap.p[i], lista) # Vai para a direita
+    return lista
 
-def ImprimirOrdemArvore(Ap):
+'''def ImprimirOrdemArvore(Ap):
   if Ap != None:
     i = 0
     while i < Ap.n:
@@ -231,4 +300,15 @@ def ImprimirOrdemArvore(Ap):
         ImprimirOrdemArvore(Ap.p[j + 1])
       print(f'{Ap.r[i].Chave} - {Ap.r[i].Elemento}')
       i += 1
+'''
 
+def ImprimirOrdemArvore(Ap, data):
+    if Ap is not None:
+        i = 0
+        while i < Ap.n:
+            if Ap.p[0] is not None:
+                ImprimirOrdemArvore(Ap.p[i], data)
+            print(f'{Ap.r[i].Chave} - {data[str(Ap.r[i].Chave)]}')
+            i += 1
+        if Ap.p[0] is not None:
+            ImprimirOrdemArvore(Ap.p[i], data)

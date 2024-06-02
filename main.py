@@ -251,6 +251,44 @@ def pesquisa():
 
     return render_template('etapa2.html', titulo='Catálogo', catalogo=output)
 
+@app.route('/imprime_ordem', methods=['GET'])
+def imprime_ordem():
+    lista = {}
+    (ap2, chave2, df) = criarAB()
+    lista = ab.Imprime(ap2, lista)
+    return render_template('etapa2.html', titulo='Catálogo', catalogo=lista)
+
+@app.route('/imprime_menor', methods=['POST'])
+def imprime_menor():
+    lista = {}
+    (ap2, chave2, df) = criarAB()
+    reg = ab.Registro()
+    reg.Chave = int(request.form['id'])
+    lista = ab.ImprimeMenor(reg, ap2, lista)
+    return render_template('etapa2.html', titulo='Catálogo', catalogo=lista)
+
+@app.route('/imprime_maior', methods=['POST'])
+def imprime_maior():
+    lista = {}
+    (ap2, chave2, df) = criarAB()
+    reg = ab.Registro()
+    reg.Chave = int(request.form['id'])
+    lista = ab.ImprimeMaior(reg, ap2, lista)
+    return render_template('etapa2.html', titulo='Catálogo', catalogo=lista)
+
+@app.route('/imprime_entre', methods=['POST'])
+def imprime_entre():
+    lista = {}
+    (ap2, chave2, df) = criarAB()
+
+    regmaior = ab.Registro()
+    regmaior.Chave = int(request.form['idmaior'])
+
+    regmenor = ab.Registro()
+    regmenor.Chave = int(request.form['idmenor'])
+
+    lista = ab.ImprimirEntreRegistro(regmenor, regmaior, ap2, lista)
+    return render_template('etapa2.html', titulo='Catálogo', catalogo=lista)
 
 @app.route('/etapa3')
 def sobre3():

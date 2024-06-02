@@ -3,28 +3,43 @@ import arvoreB3 as ab3
 import json'''
 import pandas as pd
 import arvoreB as ab
+import json
 
 ap = None
 chave = 1
 
 (ap2, chave2, df) = ab.Inserir(ap, chave)
-
-
-ab.Imprime(ap2)
-
-print('======================')
-
-reg = ab.Registro()
-reg.Chave = 4
-ab.ImprimeMaior(reg, ap2)
+lista = {}
+lista = ab.Imprime(ap2, lista)
 
 print('======================')
 
 reg = ab.Registro()
 reg.Chave = 4
-ab.ImprimeMenor(reg, ap2)
+lista = {}
+lista = ab.ImprimeMenor(reg, ap2, lista)
 
 print('======================')
+
+reg = ab.Registro()
+reg.Chave = 4
+lista = {}
+lista = ab.ImprimeMaior(reg, ap2, lista)
+
+print('======================')
+
+print('======================')
+
+try:
+    with open('catalogo.json', 'r') as file:
+        data = json.load(file)
+except Exception as e:
+    print(str(e))
+
+
+ab.ImprimirOrdemArvore(ap2, data)
+
+
 
 reg = ab.Registro()
 reg.Chave = 10
@@ -37,7 +52,7 @@ else:
 
 print('======================')
 
-arq = 'catalogo.json'
+'''arq = 'catalogo.json'
 if arq.lower().endswith(".json"):
     dataframe = pd.read_json(arq)
 else:
@@ -53,14 +68,12 @@ reg = ab.Registro()
 reg.Chave = 4
 ab.ImprimeMenorDataFrame(reg, ap2, dataframe) # TALVEZ NECESSITE ADAPTACAO
 
-print('======================')
+print('======================')'''
 
 regMenor = ab.Registro()
-regMenor.Chave = 2
+regMenor.Chave = 7
 regMaior = ab.Registro()
-regMaior.Chave = 5
+regMaior.Chave = 10
 ab.ImprimirEntreRegistro(regMenor, regMaior, ap2)
 
-print('======================')
 
-ab.ImprimirOrdemArvore(ap2)
