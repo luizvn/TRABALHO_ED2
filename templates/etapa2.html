@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Etapa 2</title>
+    <link rel="icon" href="src/img/logo-home.png" type="image/png">
     <script>
         function validateForm(event) {
             // Obtendo os valores dos campos de input           
@@ -27,6 +28,149 @@
             document.getElementById('consultaForm').addEventListener('submit', validateForm);
         };
     </script>
+    <style>
+        /* BODY */
+        body{
+            background-color: rgb(197, 11, 11);
+        }
+        /* HEADER */
+        .titulo{
+            display: flex;
+            align-items: center;
+            align-content: center;
+            text-align: center;
+            background-color: black;
+            color: white;
+            margin: 0;
+            padding-bottom: 20px;
+            width: 100%;
+        }
+        .imagem_logo{
+            margin-top: 10px;
+            margin-right: 500px;
+        }
+        .nome{
+            text-align: center;
+            font-style: bold;
+            margin-bottom: 0;
+        }
+        .aucunha{
+            text-align: center;
+            font-style: italic;
+            margin-top: 5px;
+        }
+        /* NAVEGADOR DE PÁGINAS */
+        nav {
+        background-color: rgba(210, 77, 62, 0.7);
+        padding: 1px;
+        text-align: center;
+        }
+        
+        nav a{
+            background-color: darkred;
+            padding: 2px;
+            color: antiquewhite;
+            border: 2px solid rgb(221, 181, 181);
+            margin: 20px;
+        }
+        
+        /* TABELA */
+        .titulo_tabela{
+            text-align: center;
+        }
+        table{
+            border-collapse: collapse;
+            width: 100%;
+            text-align: center;
+        }
+        td, th {
+            border: 1px solid #dcd1d1; /* Adiciona bordas às células */
+            padding: 8px; /* Adiciona espaço interno dentro das células */
+        }
+        /*tr:nth-child(even) {
+            background-color: #f2f2f2; /* Define uma cor de fundo alternada para linhas pares 
+        }*/
+        th {
+            background-color: #000000; /* Define uma cor de fundo para as células do cabeçalho */
+            font-weight: bold; /* Deixa o texto em negrito para destacar o cabeçalho */
+            text-align: center; /* Alinha o texto à esquerda no cabeçalho */
+            color: whitesmoke;
+        }
+        tr:hover {
+            background-color: #f5f5f5; /* Define uma cor de fundo quando o mouse passa sobre a linha */
+        }
+        /*td, th {
+            padding: 10px; /* Aumenta o espaço interno dentro das células 
+        } */
+
+        /* FORMS */
+        form {
+            font-family: Arial, sans-serif; /* Escolha uma fonte adequada para o formulário */
+        }
+            
+        /*input[type="text"], input[type="number"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }*/
+
+        input[type="submit"], button {
+            padding: 8px 15px;
+            background-color: #3d0901;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .row .break { /* NÃO TÁ FUNCIONANDO */
+            flex-basis: 100%;
+            height: 0; /* Para evitar que a linha tenha altura extra */
+        }
+
+        .row label {
+            flex-basis: calc(50% - 5px); /* Define a largura de cada label para ocupar metade da linha */
+        }
+
+        .row input {
+            flex-basis: calc(50% - 5px); /* Define a largura de cada input para ocupar metade da linha */
+        }
+
+        /*label{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }*/
+
+        /*label input {
+            flex: 1;
+            margin-left: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        } */
+
+        input:focus, textarea {
+            outline: none;
+            border-color: #ab3702; /* Cor quando o input recebe foco */
+            box-shadow: 0 0 5px rgba(180, 29, 3, 0.5); /* Sombra quando o input recebe foco */
+        }
+
+               
+
+    </style>
 </head>
 <body>
     <div class="index">
@@ -132,8 +276,8 @@
             <h3>Pesquisar Produtos Com IDs Maiores Que O Inserido</h3>
                 <form method="post", action="/imprime_entre" id="consultaForm">
                     <fieldset>
-                        <div class="row">         
-                            <label for="idmenor">Consultar ID maior que: <input id="idmenor" name="idmenor" type="number" required /></label>                  
+                        <div class="row break">         
+                            <label for="idmenor">Consultar ID maior que: <input id="idmenor" name="idmenor" type="number" required /></label><br>                
                             <label for="idmaior">Consultar ID menor que: <input id="idmaior" name="idmaior" type="number" required /></label> 
                         </div>
                     </fieldset>
