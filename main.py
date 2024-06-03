@@ -175,6 +175,38 @@ def editar():
 
     return render_template('etapa1.html', catalogo = catalogo)
 
+'''def compress_rle(data):
+    if not data:
+        return ""
+
+    compressed = []
+    count = 1
+    prev_char = data[0]
+
+    for char in data[1:]:
+        if char == prev_char:
+            count += 1
+        else:
+            compressed.append(prev_char + str(count))
+            prev_char = char
+            count = 1
+
+    compressed.append(prev_char + str(count))
+    return ''.join(compressed)
+
+@app.route('/download', methods=['GET'])
+def compress_and_download():
+    try:
+        with open('catalogo.json', 'r') as file:
+            catalogo = json.load(file)
+    except Exception as e:
+        print(str(e))
+    json_string = json.dumps(catalogo)
+    compressed_data = compress_rle(json_string)
+    with open('compressed.json', 'w') as f:
+        f.write(compressed_data)
+    return send_file('compressed.json', as_attachment=True)'''
+
 @app.route('/download', methods=['GET'])
 def download():
     try:
