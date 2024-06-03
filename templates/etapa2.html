@@ -18,7 +18,7 @@
             // Verificando se o valor de idMenor é menor que o valor de idMaior
             if (idMenor >= idMaior) {
                 // Se não for, exibe uma mensagem de erro e impede o envio do formulário
-                alert("O valor do ID menor deve ser menor do que o valor do ID maior.");
+                alert("O valor do ID menor deve ser maior do que o valor do ID maior.");
                 event.preventDefault();
             }
         }
@@ -273,7 +273,7 @@
                     </fieldset>
                     <input type="submit" value="Submit" />
                 </form>
-            <h3>Pesquisar Produtos Com IDs Maiores Que O Inserido</h3>
+            <h3>Pesquisar Produtos Com IDs Entre Os Inseridos</h3>
                 <form method="post", action="/imprime_entre" id="consultaForm">
                     <fieldset>
                         <div class="row break">         

@@ -255,8 +255,7 @@ def pesquisa():
     (ap2, chave2, df) = criarAB()
     reg = ab.Registro()
     reg.Chave = int(request.form['chave'])
-    encontrou = ab.Pesquisa(reg, ap2)
-    
+    encontrou = ab.Pesquisa(reg, ap2)  
     try:
         with open('catalogo.json', 'r') as file:
             catalogo = json.load(file)
