@@ -24,7 +24,6 @@ def Pesquisa(reg, Ap):
   if (Ap == None):
     print("Registro não está presente na árvore\n")
     return None
-
   while (i < Ap.n and reg.Chave > Ap.r[i - 1].Chave):
     i += 1
   if (reg.Chave == Ap.r[i - 1].Chave):
@@ -35,7 +34,6 @@ def Pesquisa(reg, Ap):
     reg = Pesquisa(reg, Ap.p[i - 1])
   else:
     reg = Pesquisa(reg, Ap.p[i])
-
   return reg
 
 #Funções de inserção
@@ -123,20 +121,20 @@ def _Insere(Reg, Ap, Ordem):
   return Ap
   
 #Insere elementos do arquivo
-def _InserirElementos(Ap, ordem, dataframe, chave):
+def _InserirElementos_id(Ap, ordem, dataframe, chave):
   tam_lin, tam_col = dataframe.shape
   Lista_id = list(dataframe.columns)
   for i in range(tam_col):
       reg = Registro()
-      reg.Chave = Lista_id[i]
-      reg.Elemento = Lista_id[i]
+      reg.Chave    = Lista_id[i]
+      reg.Elemento = float(dataframe.iloc[5, i])
       Ap = _Insere(reg, Ap, ordem)
       chave += 1
   return Ap, chave
 
 #Define os registros a serem inseridos
-def Inserir(Ap, chave):
-  ordem = 2
+def Inserir_id(Ap, chave):
+  ordem = 4
   arq = 'catalogo.json'
   if arq.lower().endswith(".json"):
     dataframe = pd.read_json(arq)
@@ -157,90 +155,191 @@ def Inserir(Ap, chave):
   print(tam_lin)
   print(tam_col)'''
   #a = input("Digite um carater para continuar")
-  Ap, chave = _InserirElementos(Ap, ordem, dataframe, chave)
+  Ap, chave = _InserirElementos_id(Ap, ordem, dataframe, chave)
   return Ap, chave, dataframe
 
+def _InserirElementos_chave(Ap, ordem, dataframe, chave):
+  tam_lin, tam_col = dataframe.shape
+  Lista_id = list(dataframe.columns)
+  for i in range(tam_col):
+      reg = Registro()
+      reg.Chave    = float(dataframe.iloc[5, i])
+      reg.Elemento = Lista_id[i]
+      Ap = _Insere(reg, Ap, ordem)
+      chave += 1
+  return Ap, chave
+
+#Define os registros a serem inseridos
+def Inserir_chave(Ap, chave):
+  ordem = 4
+  arq = 'catalogo.json'
+  if arq.lower().endswith(".json"):
+    dataframe = pd.read_json(arq)
+  else:
+    print ("Arquivo incompatível.")
+
+  '''if arq.lower().endswith(".csv"):
+    dataframe = pd.read_csv(arq, header=None)      
+  elif arq.lower().endswith((".xls", ".xlsx")):
+    dataframe = pd.read_excel(arq, header=None)'''
+  
+  #imprimindo dataframe criado do arquivo
+  print("\nDataframe")
+  print(dataframe)
+
+  print("------------------------------------")
+  '''tam_lin, tam_col = dataframe.shape
+  print(tam_lin)
+  print(tam_col)'''
+  #a = input("Digite um carater para continuar")
+  Ap, chave = _InserirElementos_chave(Ap, ordem, dataframe, chave)
+  return Ap, chave, dataframe
 # =======| FUNÇÕES DE IMPRESSÃO |=======
 
-def Imprime(Ap, lista):
+def Imprime(Ap, lista, string):
   try:
     with open('catalogo.json', 'r') as file:
       catalogo = json.load(file)
   except Exception as e:
     print(str(e))
-  if (Ap != None):
-    i = 0
-    while i < Ap.n:
-      Imprime(Ap.p[i], lista)
-      detalhes = catalogo[str(Ap.r[i].Chave)]
-      lista[str(Ap.r[i].Chave)] = {
-                'categoria': detalhes['categoria'],
-                'tipo': detalhes['tipo'],
-                'marca': detalhes['marca'],
-                'modelo': detalhes['modelo'],
-                'cor': detalhes['cor'],
-                'valor': detalhes['valor'],
-                'estoque': detalhes['estoque'],
-                'tamanhos_disponiveis': detalhes.get('tamanhos_disponiveis', ['tamanho unico'])
-            }
-      print(Ap.r[i].Chave, "-", Ap.r[i].Elemento)
-      i += 1
-    Imprime(Ap.p[i], lista)
+  if string == 'id':
+    if (Ap != None):
+      i = 0
+      while i < Ap.n:
+        Imprime(Ap.p[i], lista, string)
+        detalhes = catalogo[str(Ap.r[i].Chave)]
+        lista[str(Ap.r[i].Chave)] = {
+                  'categoria': detalhes['categoria'],
+                  'tipo': detalhes['tipo'],
+                  'marca': detalhes['marca'],
+                  'modelo': detalhes['modelo'],
+                  'cor': detalhes['cor'],
+                  'valor': detalhes['valor'],
+                  'estoque': detalhes['estoque'],
+                  'tamanhos_disponiveis': detalhes.get('tamanhos_disponiveis', ['tamanho unico'])
+              }
+        print(Ap.r[i].Chave, "-", Ap.r[i].Elemento)
+        i += 1
+      Imprime(Ap.p[i], lista, string)
+      return lista
+  else:
+    if (Ap != None):
+      i = 0
+      while i < Ap.n:
+        Imprime(Ap.p[i], lista, string)
+        detalhes = catalogo[str(Ap.r[i].Elemento)]
+        lista[str(Ap.r[i].Elemento)] = {
+                  'categoria': detalhes['categoria'],
+                  'tipo': detalhes['tipo'],
+                  'marca': detalhes['marca'],
+                  'modelo': detalhes['modelo'],
+                  'cor': detalhes['cor'],
+                  'valor': detalhes['valor'],
+                  'estoque': detalhes['estoque'],
+                  'tamanhos_disponiveis': detalhes.get('tamanhos_disponiveis', ['tamanho unico'])
+              }
+        print(Ap.r[i].Chave, "-", Ap.r[i].Elemento)
+        i += 1
+      Imprime(Ap.p[i], lista, string)
+      return lista
+
+def ImprimeMenor(reg, Ap, lista, radio): # Imprime valores menores doq informado
+  try:
+    with open('catalogo.json', 'r') as file:
+      catalogo = json.load(file)
+  except Exception as e:
+    print(str(e))
+  if radio == 'id':
+    if (Ap != None):
+      i = 0
+      while i < Ap.n:
+        ImprimeMenor(reg, Ap.p[i], lista, radio)
+        if (Ap.r[i].Chave < reg.Chave):
+          detalhes = catalogo[str(Ap.r[i].Chave)]
+          lista[str(Ap.r[i].Chave)] = {
+                  'categoria': detalhes['categoria'],
+                  'tipo': detalhes['tipo'],
+                  'marca': detalhes['marca'],
+                  'modelo': detalhes['modelo'],
+                  'cor': detalhes['cor'],
+                  'valor': detalhes['valor'],
+                  'estoque': detalhes['estoque'],
+                  'tamanhos_disponiveis': detalhes.get('tamanhos_disponiveis', ['tamanho unico'])
+              }
+          print(Ap.r[i].Chave, "-", Ap.r[i].Elemento)
+        i += 1
+      ImprimeMenor(reg, Ap.p[i], lista, radio)
+    return lista
+  else:
+    if (Ap != None):
+      i = 0
+      while i < Ap.n:
+        ImprimeMenor(reg, Ap.p[i], lista, radio)
+        if (Ap.r[i].Chave < reg.Chave):
+          detalhes = catalogo[str(Ap.r[i].Elemento)]
+          lista[str(Ap.r[i].Elemento)] = {
+                  'categoria': detalhes['categoria'],
+                  'tipo': detalhes['tipo'],
+                  'marca': detalhes['marca'],
+                  'modelo': detalhes['modelo'],
+                  'cor': detalhes['cor'],
+                  'valor': detalhes['valor'],
+                  'estoque': detalhes['estoque'],
+                  'tamanhos_disponiveis': detalhes.get('tamanhos_disponiveis', ['tamanho unico'])
+              }
+          print(Ap.r[i].Chave, "-", Ap.r[i].Elemento)
+        i += 1
+      ImprimeMenor(reg, Ap.p[i], lista, radio)
     return lista
 
-def ImprimeMenor(reg, Ap, lista): # Imprime valores menores doq informado
+def ImprimeMaior(reg, Ap, lista, radio):
   try:
     with open('catalogo.json', 'r') as file:
       catalogo = json.load(file)
   except Exception as e:
     print(str(e))
-  if (Ap != None):
-    i = 0
-    while i < Ap.n:
-      ImprimeMenor(reg, Ap.p[i], lista)
-      if (Ap.r[i].Chave < reg.Chave):
-        detalhes = catalogo[str(Ap.r[i].Chave)]
-        lista[str(Ap.r[i].Chave)] = {
-                'categoria': detalhes['categoria'],
-                'tipo': detalhes['tipo'],
-                'marca': detalhes['marca'],
-                'modelo': detalhes['modelo'],
-                'cor': detalhes['cor'],
-                'valor': detalhes['valor'],
-                'estoque': detalhes['estoque'],
-                'tamanhos_disponiveis': detalhes.get('tamanhos_disponiveis', ['tamanho unico'])
-            }
-        print(Ap.r[i].Chave, "-", Ap.r[i].Elemento)
-      i += 1
-    ImprimeMenor(reg, Ap.p[i], lista)
-  return lista
-
-def ImprimeMaior(reg, Ap, lista):
-  try:
-    with open('catalogo.json', 'r') as file:
-      catalogo = json.load(file)
-  except Exception as e:
-    print(str(e))
-  if (Ap != None):
-    i = 0
-    while i < Ap.n:
-      ImprimeMaior(reg, Ap.p[i], lista)
-      if (Ap.r[i].Chave > reg.Chave):
-        detalhes = catalogo[str(Ap.r[i].Chave)]
-        lista[str(Ap.r[i].Chave)] = {
-                'categoria': detalhes['categoria'],
-                'tipo': detalhes['tipo'],
-                'marca': detalhes['marca'],
-                'modelo': detalhes['modelo'],
-                'cor': detalhes['cor'],
-                'valor': detalhes['valor'],
-                'estoque': detalhes['estoque'],
-                'tamanhos_disponiveis': detalhes.get('tamanhos_disponiveis', ['tamanho unico'])
-            }
-        print(Ap.r[i].Chave, "-", Ap.r[i].Elemento)
-      i += 1
-    ImprimeMaior(reg, Ap.p[i], lista)
-  return lista
+  if radio == 'id':
+    if (Ap != None):
+      i = 0
+      while i < Ap.n:
+        ImprimeMaior(reg, Ap.p[i], lista, radio)
+        if (Ap.r[i].Chave > reg.Chave):
+          detalhes = catalogo[str(Ap.r[i].Chave)]
+          lista[str(Ap.r[i].Chave)] = {
+                  'categoria': detalhes['categoria'],
+                  'tipo': detalhes['tipo'],
+                  'marca': detalhes['marca'],
+                  'modelo': detalhes['modelo'],
+                  'cor': detalhes['cor'],
+                  'valor': detalhes['valor'],
+                  'estoque': detalhes['estoque'],
+                  'tamanhos_disponiveis': detalhes.get('tamanhos_disponiveis', ['tamanho unico'])
+              }
+          print(Ap.r[i].Chave, "-", Ap.r[i].Elemento)
+        i += 1
+      ImprimeMaior(reg, Ap.p[i], lista, radio)
+    return lista
+  else:
+    if (Ap != None):
+      i = 0
+      while i < Ap.n:
+        ImprimeMaior(reg, Ap.p[i], lista, radio)
+        if (Ap.r[i].Chave > reg.Chave):
+          detalhes = catalogo[str(Ap.r[i].Elemento)]
+          lista[str(Ap.r[i].Elemento)] = {
+                  'categoria': detalhes['categoria'],
+                  'tipo': detalhes['tipo'],
+                  'marca': detalhes['marca'],
+                  'modelo': detalhes['modelo'],
+                  'cor': detalhes['cor'],
+                  'valor': detalhes['valor'],
+                  'estoque': detalhes['estoque'],
+                  'tamanhos_disponiveis': detalhes.get('tamanhos_disponiveis', ['tamanho unico'])
+              }
+          print(Ap.r[i].Chave, "-", Ap.r[i].Elemento)
+        i += 1
+      ImprimeMaior(reg, Ap.p[i], lista, radio)
+    return lista
     
 #Impressão Arquivo Completo
 #obtenção da chave na árvoreB e restante dos dados do DataFrame
@@ -264,32 +363,54 @@ def ImprimeMaiorDataFrame(x, Ap, df):
       i += 1
     ImprimeMaiorDataFrame(x, Ap.p[i],df)
 
-def ImprimirEntreRegistro(regMenor, regMaior, Ap, lista):
+def ImprimirEntreRegistro(regMenor, regMaior, Ap, lista, radio):
   try:
     with open('catalogo.json', 'r') as file:
       catalogo = json.load(file)
   except Exception as e:
     print(str(e))
-  if Ap != None:
-    i = 0
-    while(i < Ap.n):
-      ImprimirEntreRegistro(regMenor, regMaior, Ap.p[i], lista) # Vai para a esquerda
-      if((Ap.r[i].Chave > regMenor.Chave) and (Ap.r[i].Chave < regMaior.Chave)):
-        detalhes = catalogo[str(Ap.r[i].Chave)]
-        lista[str(Ap.r[i].Chave)] = {
-                'categoria': detalhes['categoria'],
-                'tipo': detalhes['tipo'],
-                'marca': detalhes['marca'],
-                'modelo': detalhes['modelo'],
-                'cor': detalhes['cor'],
-                'valor': detalhes['valor'],
-                'estoque': detalhes['estoque'],
-                'tamanhos_disponiveis': detalhes.get('tamanhos_disponiveis', ['tamanho unico'])
-            }
-        print(f'{Ap.r[i].Chave} - {Ap.r[i].Elemento}')
-      i += 1
-    ImprimirEntreRegistro(regMenor, regMaior, Ap.p[i], lista) # Vai para a direita
-    return lista
+  if radio == 'id':
+    if Ap != None:
+      i = 0
+      while(i < Ap.n):
+        ImprimirEntreRegistro(regMenor, regMaior, Ap.p[i], lista, radio) # Vai para a esquerda
+        if((Ap.r[i].Chave > regMenor.Chave) and (Ap.r[i].Chave < regMaior.Chave)):
+          detalhes = catalogo[str(Ap.r[i].Chave)]
+          lista[str(Ap.r[i].Chave)] = {
+                  'categoria': detalhes['categoria'],
+                  'tipo': detalhes['tipo'],
+                  'marca': detalhes['marca'],
+                  'modelo': detalhes['modelo'],
+                  'cor': detalhes['cor'],
+                  'valor': detalhes['valor'],
+                  'estoque': detalhes['estoque'],
+                  'tamanhos_disponiveis': detalhes.get('tamanhos_disponiveis', ['tamanho unico'])
+              }
+          print(f'{Ap.r[i].Chave} - {Ap.r[i].Elemento}')
+        i += 1
+      ImprimirEntreRegistro(regMenor, regMaior, Ap.p[i], lista, radio) # Vai para a direita
+      return lista
+  else:
+    if Ap != None:
+      i = 0
+      while(i < Ap.n):
+        ImprimirEntreRegistro(regMenor, regMaior, Ap.p[i], lista, radio) # Vai para a esquerda
+        if((Ap.r[i].Chave > regMenor.Chave) and (Ap.r[i].Chave < regMaior.Chave)):
+          detalhes = catalogo[str(Ap.r[i].Elemento)]
+          lista[str(Ap.r[i].Elemento)] = {
+                  'categoria': detalhes['categoria'],
+                  'tipo': detalhes['tipo'],
+                  'marca': detalhes['marca'],
+                  'modelo': detalhes['modelo'],
+                  'cor': detalhes['cor'],
+                  'valor': detalhes['valor'],
+                  'estoque': detalhes['estoque'],
+                  'tamanhos_disponiveis': detalhes.get('tamanhos_disponiveis', ['tamanho unico'])
+              }
+          print(f'{Ap.r[i].Chave} - {Ap.r[i].Elemento}')
+        i += 1
+      ImprimirEntreRegistro(regMenor, regMaior, Ap.p[i], lista, radio) # Vai para a direita
+      return lista
 
 '''def ImprimirOrdemArvore(Ap):
   if Ap != None:

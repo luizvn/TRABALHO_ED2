@@ -243,14 +243,24 @@
                 
                     </table>
                 </fieldset>
-            <form action="/imprime_ordem" method="get">
-                <button type="submit">Ordem</button>
+            <form action="/imprime_ordem" method="post">
+                <fieldset>
+                    <legend>Pesquisar por:</legend>
+                    <label for="radio_id"><input id="radio_id" type="radio" name="radio" class="inline" value="id" checked /> ID</label>
+                    <label for="radio_valor"><input id="radio_valor" type="radio" name="radio" class="inline" value="valor"/> Valor</label>
+                  
+                    <button type="submit">Ordem</button>
+                </fieldset>
             </form>
             <h3>Pesquisar Produto no Catálogo</h3>
                 <form method="post", action="/pesquisa">
                     <fieldset>
                         <div class="row">
-                            <label for="chave">Insira o ID do produto desejado: <input id="chave" name="chave" type="number" required /></label>
+                            <legend>Pesquisar por:</legend>
+                            <label for="radio_id"><input id="radio_id" type="radio" name="radio" class="inline" value="id" checked /> ID</label>
+                            <label for="radio_valor"><input id="radio_valor" type="radio" name="radio" class="inline" value="valor"/> Valor</label>
+
+                            <label for="chave">Insira o ID do produto desejado: <input id="chave" name="chave" type="number" step="0.01" required /></label>
                         </div>
                     </fieldset>
                     <input type="submit" value="Submit" />
@@ -259,7 +269,11 @@
                 <form method="post", action="/imprime_menor">
                     <fieldset>
                         <div class="row">
-                            <label for="id">Consultar ID menor que: <input id="id" name="id" type="number" required /></label>
+                            <legend>Pesquisar por:</legend>
+                            <label for="radio_id"><input id="radio_id" type="radio" name="radio" class="inline" value="id" checked /> ID</label>
+                            <label for="radio_valor"><input id="radio_valor" type="radio" name="radio" class="inline" value="valor" /> Valor</label>
+
+                            <label for="id">Consultar ID menor que: <input id="id" name="id" type="number" step="0.01" required /></label>
                         </div>
                     </fieldset>
                     <input type="submit" value="Submit" />
@@ -268,7 +282,11 @@
                 <form method="post", action="/imprime_maior">
                     <fieldset>
                         <div class="row">
-                            <label for="id">Consultar ID maior que: <input id="id" name="id" type="number" required /></label>
+                            <legend>Pesquisar por:</legend>
+                            <label for="radio_id"><input id="radio_id" type="radio" name="radio" class="inline" value="id" checked /> ID</label>
+                            <label for="radio_valor"><input id="radio_valor" type="radio" name="radio" class="inline" value="valor" /> Valor</label>
+
+                            <label for="id">Consultar ID maior que: <input id="id" name="id" type="number" step="0.01" required /></label>
                         </div>
                     </fieldset>
                     <input type="submit" value="Submit" />
@@ -276,9 +294,13 @@
             <h3>Pesquisar Produtos Com IDs Entre Os Inseridos</h3>
                 <form method="post", action="/imprime_entre" id="consultaForm">
                     <fieldset>
-                        <div class="row break">         
-                            <label for="idmenor">Consultar ID maior que: <input id="idmenor" name="idmenor" type="number" required /></label><br>                
-                            <label for="idmaior">Consultar ID menor que: <input id="idmaior" name="idmaior" type="number" required /></label> 
+                        <div class="row break">
+                            <legend>Pesquisar por:</legend>
+                            <label for="radio_id"><input id="radio_id" type="radio" name="radio" class="inline" value="id" checked /> ID</label>
+                            <label for="radio_valor"><input id="radio_valor" type="radio" name="radio" class="inline" value="valor" /> Valor</label>
+
+                            <label for="idmenor">Consultar ID maior que: <input id="idmenor" name="idmenor" type="number" step="0.01" required /></label><br>                
+                            <label for="idmaior">Consultar ID menor que: <input id="idmaior" name="idmaior" type="number" step="0.01" required /></label> 
                         </div>
                     </fieldset>
                     <input type="submit" value="Submit" />
