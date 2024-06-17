@@ -1,0 +1,24 @@
+ETAPA 03 - GRAFOS
+
+-> Catálogo:
+    - Forms
+    - Forms para comprar produto (por id)
+    - Bloquear caso usuário tente colocar o mesmo item
+
+-> Carrinho de compra:
+    - Informar elementos que deseja comprar
+    - Informar quantidade
+    - Informar Valor total
+    - Opção de tirar/diminuir do Carrinho 
+    - Opção de adicionar um produto igual
+    - Botão Compra
+
+-> Botar mapa no site :
+    - Mapa do Leaflet
+    - Escolher onde colocar
+
+-> Botar grafos:
+    - Colocar grafos no mapa + suas direções
+
+-> Calcular valor do frete com melhor caminho:
+    -
