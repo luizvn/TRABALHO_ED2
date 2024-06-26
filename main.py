@@ -459,7 +459,14 @@ def imprime_entre():
 
 @app.route('/etapa3')
 def sobre3():
-    return render_template('etapa3.html')
+    titulo = "Catálogo"
+    try:
+        with open('catalogo.json', 'r') as file:
+            catalogo = json.load(file)
+    except Exception as e:
+        print(str(e))
+    return render_template('etapa3.html', titulo=titulo, catalogo=catalogo)
+    
 
 # exemplo no navegador
 # http://localhost:5000/paginaEDII

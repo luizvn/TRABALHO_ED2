@@ -4,8 +4,199 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Etapa 3</title>
+    <style>
+        body{
+            background-color: rgb(197, 11, 11);
+        }
+        /* MENU */
+        .titulo{
+            display: flex;
+            align-items: center;
+            align-content: center;
+            background-color: black;
+            color: white;
+            margin: 0;
+            padding-bottom: 20px;
+            width: 100%;
+        }
+        .imagem_logo{
+            margin-top: 10px;
+            margin-right: 500px;
+        }
+        .texto{
+            margin-left: 20px;
+            text-align: center;
+        }
+        .nome{
+            text-align: center;
+            font-style: bold;
+            margin-bottom: 0;
+        }
+        .aucunha{
+            text-align: center;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        nav {
+            background-color: rgba(210, 77, 62, 0.7); 
+            padding: 1px;
+            text-align: center;
+        }
+        
+        nav a{
+            background-color: darkred;
+            padding: 2px;
+            color: antiquewhite;
+            border: 2px solid rgb(221, 181, 181);
+            margin: 20px;
+        }
+
+        /* TABELA */
+        .titulo_tabela{
+            text-align: center;
+        }
+        table{
+            border-collapse: collapse;
+            width: 100%;
+            text-align: center;
+        }
+        td, th {
+            border: 1px solid #dcd1d1; /* Adiciona bordas às células */
+            padding: 8px; /* Adiciona espaço interno dentro das células */
+        }
+        /*tr:nth-child(even) {
+            background-color: #f2f2f2; /* Define uma cor de fundo alternada para linhas pares 
+        }*/
+        th {
+            background-color: #000000; /* Define uma cor de fundo para as células do cabeçalho */
+            font-weight: bold; /* Deixa o texto em negrito para destacar o cabeçalho */
+            text-align: center; /* Alinha o texto à esquerda no cabeçalho */
+            color: whitesmoke;
+        }
+        tr:hover {
+            background-color: #f5f5f5; /* Define uma cor de fundo quando o mouse passa sobre a linha */
+        }
+        /*td, th {
+            padding: 10px; /* Aumenta o espaço interno dentro das células 
+        } */
+
+        /* FORMS */
+        form {
+            font-family: Arial, sans-serif; /* Escolha uma fonte adequada para o formulário */
+        }
+            
+        /*input[type="text"], input[type="number"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }*/
+
+        input[type="submit"], button {
+            padding: 8px 15px;
+            background-color: #3d0901;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .row .break { /* NÃO TÁ FUNCIONANDO */
+            flex-basis: 100%;
+            height: 0; /* Para evitar que a linha tenha altura extra */
+        }
+
+        .row label {
+            flex-basis: calc(50% - 5px); /* Define a largura de cada label para ocupar metade da linha */
+        }
+
+        .row input {
+            flex-basis: calc(50% - 5px); /* Define a largura de cada input para ocupar metade da linha */
+        }
+    </style>
 </head>
 <body>
-    ETAPA 03
+    <main>
+        <header  class="titulo">
+            <div class="imagem_logo">
+                <a href=""><img src="src/img/logo-home.png" alt="Logo da Leão Imperial" height="120"></a>
+            </div>
+            <div class="texto">
+                <h1 class="nome">Royal Sports</h1>
+                <p class="aucunha">O Leão Imperial</p>
+            </div>
+        </header>
+        <nav>
+            <h2>
+                <a class="etapa1" href="etapa1">etapa 1</a>
+                <a class="etapa2" href="etapa2">etapa 2</a>
+                <a class="etapa3" href="etapa3">etapa 3</a>
+            </h2>
+        </nav>
+
+        <div class="container text-center">
+
+            <h2 class="titulo_tabela"> {{ titulo}} </h2>
+
+            <fieldset>
+                <table class="table">
+            
+                    <thead>
+                        <tr> 
+                            <th>ID</th>
+                
+                            <th>Categoria</th>
+
+                            <th>Tipo</th>
+
+                            <th>Marca</th>
+
+                            <th>Modelo</th>
+
+                            <th>Cor</th>
+
+                            <th>Valor</th>
+
+                            <th>Estoque</th>
+                        </tr>
+                    </thead>
+                
+                    <tbody>
+                        {% for codigo, produto in catalogo.items()%}
+                            <tr>
+                            
+                                <td>{{codigo}}</td>
+
+                                <td>{{produto.categoria}}</td>
+                
+                                <td>{{produto.tipo}}</td>
+
+                                <td>{{produto.marca}}</td>
+
+                                <td>{{produto.modelo}}</td>
+
+                                <td>{{produto.cor}}</td>
+
+                                <td>{{produto.valor}}</td>
+
+                                <td>{{produto.estoque}}</td>
+                            </tr>
+                        {%endfor%}
+                    </tbody>
+            
+                </table>
+            </fieldset>
+        </div>
+
+    </main>
 </body>
 </html>
