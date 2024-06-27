@@ -4,6 +4,9 @@ import sys
 import gzip
 from io import BytesIO
 import arvoreB as ab  # Arvore B
+import folium
+import igraph
+import os
 
 # inicializaçaõ
 app = Flask(__name__, static_folder='src')
@@ -465,7 +468,18 @@ def sobre3():
             catalogo = json.load(file)
     except Exception as e:
         print(str(e))
-    return render_template('etapa3.html', titulo=titulo, catalogo=catalogo)
+
+    m = folium.Map(location=[-12.9714, -38.5014], zoom_start=13)
+    mapa_html = m._repr_html_()
+
+    mapa_path = os.path.join('static', 'mapa.html')
+    m.save(mapa_path) 
+
+    return render_template('etapa3.html', titulo=titulo, catalogo=catalogo, mapa_html=mapa_html)
+
+@app.route('/mapa')
+def mapa():
+    return render_template('mapa.html')
     
 
 # exemplo no navegador
