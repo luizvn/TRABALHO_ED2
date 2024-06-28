@@ -459,6 +459,10 @@ def imprime_entre():
         lista = ab.ImprimirEntreRegistro(regmenor, regmaior, ap2, lista, radio)
     return render_template('etapa2.html', titulo='Catálogo', catalogo=lista)
 
+
+# |=======| GRAFOS |=======|
+
+# Coordenadas:
 coordenadas = {
     'Barra': [-13.009615, -38.531981], #0
     'Ondina': [-13.005999, -38.509447], #1
@@ -496,12 +500,37 @@ for i, (key, value) in enumerate(coordenadas.items()):
     g.vs[i]["label"] = key
 
 # Adicionando arestas
-g.add_edges([(0,2),(0,1),(0,3),(1,2),(1,3),(2,4),(13,4),(2,9),(9,4),(23,2),(1,15),(8,12),(3,1),(10,14),(11,24),(18,1),(20,7),(11,12),(21,19),(19,7),(17,20),(10,4),(11,4),(5,1),
-            (6,0),(0,24),(11,24),(11,12),(3,9),(13,14),(23,7)])
-#31
+g.add_edges([(0, 1), (0, 7),                          # Barra
+              (1, 10), (1, 9), (1, 2),                # Ondina
+              (2, 10), (2, 3), (2, 4),                # Rio Vermelho
+              (3, 4), (3, 5),                         # Pituba
+              (4, 5),                                 # Itaigara
+              (5, 6), (5, 22),                        # Boca do Rio
+              (6, 16), (6, 17), (6, 25),              # Imbui
+              (7, 8), (7, 9),                         # Vitória
+              (8, 9), (8, 11), (8, 13),               # Comércio
+              (9, 10), (9, 11), (9, 12),              # Dique do Tororó
+              (10, 12),                               # Federação
+              (11, 16), (11, 13),                     # Vila Laura
+              (12, 11), (12, 4),                      # Brotas
+              (13, 14), (13, 20),                     # Liberdade
+              (14, 15), (14, 21), (14, 20),           # Uruguai
+                                                      # Ribeira
+              (16, 17), (16, 6),                      # Pernambues
+              (17, 18),                               # Cabula
+              (18, 19), (18, 25),                     # Sussuarana
+                                                      # Canabrava
+              (20, 14), (20, 18),                     # São Caetano
+              (21, 23), (21, 24),                     # Lobato
+                                                      # Piatã
+                                                      # Plataforma
+                                                      # Pirajá
+              (25, 18), (25, 22),                     # São Rafael      
+              ])                       
+#45 conexões, caminhos
 
 # Adicionando pesos e  labels de arestas
-#weights = [8,6,3,5,6,4,9,1,5,23,4,6,1,1,5,7,5,2,2,2,3,4,6,4,5,6,7,3,3,1,1]
+#weights = [8, 2.8,3,5,6,4,9,1,5,23,4,6,1,1,5,7,5,2,2,2,3,4,6,4,5,6,7,3,3,1,1]
 #g.es['weight'] = weights
 
 def add_edge(map_obj, start, end, color='blue'):
@@ -521,7 +550,7 @@ def sobre3():
     except Exception as e:
         print(str(e))
 
-    m = folium.Map(location=[-12.9714, -38.5014], zoom_start=13)
+    m = folium.Map(location=[-12.9714, -38.5014], zoom_start=12)
     
 
     for edge in g.es:
@@ -531,7 +560,10 @@ def sobre3():
 
     for vertex in g.vs:
         coords = coordenadas[vertex["label"]]
-        folium.Marker(location=coords, popup=vertex["label"], icon=folium.Icon(color='black')).add_to(m)
+        if vertex['label'] == 'Barra':
+            folium.Marker(location=coords, popup=vertex["label"], icon=folium.Icon(color='red')).add_to(m)
+        else:
+            folium.Marker(location=coords, popup=vertex["label"], icon=folium.Icon(color='black')).add_to(m)
 
     '''for i in range(len(caminho) - 1):
         start = coordenadas[caminho[i]]
