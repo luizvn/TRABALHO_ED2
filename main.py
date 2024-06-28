@@ -500,46 +500,39 @@ for i, (key, value) in enumerate(coordenadas.items()):
     g.vs[i]["label"] = key
 
 # Adicionando arestas
-g.add_edges([(0, 1), (0, 7),                          # Barra
-              (1, 10), (1, 9), (1, 2),                # Ondina
-              (2, 10), (2, 3), (2, 4),                # Rio Vermelho
-              (3, 4), (3, 5),                         # Pituba
-              (4, 5),                                 # Itaigara
-              (5, 6), (5, 22),                        # Boca do Rio
-              (6, 16), (6, 17), (6, 25),              # Imbui
-              (7, 8), (7, 9),                         # Vitória
-              (8, 9), (8, 11), (8, 13),               # Comércio
-              (9, 10), (9, 11), (9, 12),              # Dique do Tororó
-              (10, 12),                               # Federação
-              (11, 16), (11, 13),                     # Vila Laura
-              (12, 11), (12, 4),                      # Brotas
-              (13, 14), (13, 20),                     # Liberdade
-              (14, 15), (14, 21), (14, 20),           # Uruguai
-                                                      # Ribeira
-              (16, 17), (16, 6),                      # Pernambues
-              (17, 18),                               # Cabula
-              (18, 19), (18, 25),                     # Sussuarana
-                                                      # Canabrava
-              (20, 14), (20, 18),                     # São Caetano
-              (21, 23), (21, 24),                     # Lobato
-                                                      # Piatã
-                                                      # Plataforma
-                                                      # Pirajá
-              (25, 18), (25, 22),                     # São Rafael      
+g.add_edges([(0, 1), (0, 7),                          # Barra x
+              (1, 10), (1, 9), (1, 2),                # Ondina x
+              (2, 10), (2, 3), (2, 4),                # Rio Vermelho x
+              (3, 4), (3, 5),                         # Pituba x
+              (4, 5),                                 # Itaigara x
+              (5, 6), (5, 22),                        # Boca do Rio x
+              (6, 16), (6, 17), (6, 25),              # Imbui x
+              (7, 8), (7, 9),                         # Vitória x
+              (8, 9), (8, 11), (8, 13),               # Comércio x
+              (9, 10), (9, 11), (9, 12),              # Dique do Tororó x
+              (10, 12),                               # Federação x
+              (11, 16), (11, 13),                     # Vila Laura x
+              (12, 11), (12, 4),                      # Brotas x
+              (13, 14), (13, 20),                     # Liberdade x
+              (14, 15), (14, 21), (14, 20),           # Uruguai x
+                                                      # Ribeira x
+              (16, 17), (16, 6),                      # Pernambues x
+              (17, 18),                               # Cabula x
+              (18, 19), (18, 25),                     # Sussuarana x
+                                                      # Canabrava  x
+              (20, 14), (20, 18),                     # São Caetano x
+              (21, 23), (21, 24),                     # Lobato x
+                                                      # Piatã x
+                                                      # Plataforma x
+                                                      # Pirajá x
+              (25, 18), (25, 22),                     # São Rafael x   
               ])                       
 #45 conexões, caminhos
 
 # Adicionando pesos e  labels de arestas
-#weights = [8, 2.8,3,5,6,4,9,1,5,23,4,6,1,1,5,7,5,2,2,2,3,4,6,4,5,6,7,3,3,1,1]
-#g.es['weight'] = weights
-
-def add_edge(map_obj, start, end, color='blue'):
-    folium.PolyLine(
-        [start, end],
-        color=color,
-        weight=2.5,
-        opacity=1
-    ).add_to(map_obj)
+weights = [3.5, 2.8, 4.1, 5.4, 2.7, 3.9, 4.2, 5.4, 2.0, 5.1, 5,0, 3.2, 6.8, 3.9, 3.4, 5.0, 3.7, 4.7, 2.9, 4.5, 4.3, 3.2, 4.7, 4.5, 2.6, 3.8, 3.4, 3.6, 4.8, 4.3, 3.7, 4.0, 7.2, 
+           5.1, 5.2, 5.7, 4.4, 4.4, 5.0, 6.0, 3.3, 3.5, 3.7, 7.9]
+g.es['weight'] = weights
 
 @app.route('/etapa3')
 def sobre3():
@@ -550,7 +543,7 @@ def sobre3():
     except Exception as e:
         print(str(e))
 
-    m = folium.Map(location=[-12.9714, -38.5014], zoom_start=12)
+    m = folium.Map(location=[-12.9535447,-38.483914], zoom_start=12)
     
 
     for edge in g.es:

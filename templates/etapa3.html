@@ -222,24 +222,72 @@
             
                 </table>
             </fieldset>
+            <form method="post", action="/inserir_carrinho">
+                <fieldset>
+                    <div class="row">
+                        <label for="chave">Insira o ID do produto desejado: <input id="chave" name="chave" type="number" step="0.01" required /></label>
+                        <label for="quantidade">Insira o ID do produto desejado: <input id="quantidade" name="quantidade" type="number" required /></label>
+                    </div>
+                </fieldset>
+                <input type="submit" value="Submit" />
+            </form>
         </div>
+        <div class="container text-center">
 
-        <!-- MAPA 
-        <div id="mapa" >
-            <iframe src="mapa.html" width="70%" height="400px" id="mapa-iframe" frameborder="0"></iframe>
-        </div>-->
+            <h2 class="titulo_tabela"> {{ titulo_carrinho}} </h2>
 
-        <!-- <div id="mapa">
-            {{ mapa_html|safe }}
-        </div>-->
+            <fieldset>
+                <table class="table">
+            
+                    <thead>
+                        <tr> 
+                            <th>ID</th>
+                
+                            <th>Categoria</th>
 
-        <!-- MAPA 
-        <div id="mapa">
-            <iframe src="{{ mapa_path }}" width="70%" height="400px" frameborder="0"></iframe>
-        </div>-->
+                            <th>Tipo</th>
 
+                            <th>Marca</th>
+
+                            <th>Modelo</th>
+
+                            <th>Cor</th>
+
+                            <th>Valor</th>
+
+                            <th>Quantidade</th>
+                        </tr>
+                    </thead>
+                
+                    <tbody>
+                        {% for (codigo, produto), quantidade in carrinho.items()|zip(quantidades)%}
+                            <tr>
+                            
+                                <td>{{codigo}}</td>
+
+                                <td>{{produto.categoria}}</td>
+                
+                                <td>{{produto.tipo}}</td>
+
+                                <td>{{produto.marca}}</td>
+
+                                <td>{{produto.modelo}}</td>
+
+                                <td>{{produto.cor}}</td>
+
+                                <td>{{produto.valor}}</td>
+
+                                <td>{{quantidade}}</td>
+                            </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
         <div class="mapa">
-            {{ mapa_html | safe }}
+            <fieldset>
+                {{ mapa_html | safe }}
+            </fieldset>
         </div>
 
     </main>
