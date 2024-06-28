@@ -5,7 +5,7 @@ import gzip
 from io import BytesIO
 import arvoreB as ab  # Arvore B
 import folium
-import igraph
+from igraph import *
 import os
 
 # inicializaçaõ
@@ -459,6 +459,58 @@ def imprime_entre():
         lista = ab.ImprimirEntreRegistro(regmenor, regmaior, ap2, lista, radio)
     return render_template('etapa2.html', titulo='Catálogo', catalogo=lista)
 
+coordenadas = {
+    'Barra': [-13.009615, -38.531981], #0
+    'Ondina': [-13.005999, -38.509447], #1
+    'Rio Vermelho': [-13.013154, -38.490853], #2
+    'Pituba':[-13.005374, -38.458890], #3
+    'Itaigara':[-12.996067, -38.467264], #4
+    'Boca do Rio':[-12.979125, -38.428300], #5
+    'Imbui':[-12.969172, -38.434016], #6
+    'Vitória':[-12.995058, -38.526659], #7
+    'Comércio':[-12.971356, -38.512657], #8
+    'Dique do Tororó':[-12.983893, -38.506903], #9
+    'Federação':[-12.999309, -38.499580], #10
+    'Vila Laura':[-12.972273, -38.487984], #11
+    'Brotas':[-12.989544, -38.491740], #12
+    'Liberdade':[-12.951103, -38.495833], #13
+    'Uruguai':[-12.932799, -38.496649], #14
+    'Ribeira':[-12.912603, -38.496496], #15
+    'Pernambués':[-12.967737, -38.461914], #16
+    'Cabula':[-12.957054, -38.453342], #17
+    'Sussuarana':[-12.932990, -38.445747], #18
+    'Canabrava':[-12.919384, -38.426655], #19
+    'São Caetano':[-12.937074, -38.476358], #20
+    'Lobato':[-12.911165, -38.479429], #21
+    'Piatã':[-12.952999, -38.385205], #22
+    'Plataforma':[-12.900842, -38.483310], #23
+    'Pirajá':[-12.899566, -38.463253], #24
+    'São Rafael':[-12.936610, -38.422724], #25
+}
+
+# Criando o grafo
+g = Graph(directed=True)
+g.add_vertices(len(coordenadas))
+for i, (key, value) in enumerate(coordenadas.items()):
+    g.vs[i]["id"] = i
+    g.vs[i]["label"] = key
+
+# Adicionando arestas
+g.add_edges([(0,2),(0,1),(0,3),(1,2),(1,3),(2,4),(13,4),(2,9),(9,4),(23,2),(1,15),(8,12),(3,1),(10,14),(11,24),(18,1),(20,7),(11,12),(21,19),(19,7),(17,20),(10,4),(11,4),(5,1),
+            (6,0),(0,24),(11,24),(11,12),(3,9),(13,14),(23,7)])
+#31
+
+# Adicionando pesos e  labels de arestas
+#weights = [8,6,3,5,6,4,9,1,5,23,4,6,1,1,5,7,5,2,2,2,3,4,6,4,5,6,7,3,3,1,1]
+#g.es['weight'] = weights
+
+def add_edge(map_obj, start, end, color='blue'):
+    folium.PolyLine(
+        [start, end],
+        color=color,
+        weight=2.5,
+        opacity=1
+    ).add_to(map_obj)
 
 @app.route('/etapa3')
 def sobre3():
@@ -470,8 +522,26 @@ def sobre3():
         print(str(e))
 
     m = folium.Map(location=[-12.9714, -38.5014], zoom_start=13)
-    mapa_html = m._repr_html_()
+    
 
+    for edge in g.es:
+        start = coordenadas[g.vs[edge.source]["label"]]
+        end = coordenadas[g.vs[edge.target]["label"]]
+        folium.PolyLine([start, end],color='red', weight=2.0, opacity=0.6).add_to(m)
+
+    for vertex in g.vs:
+        coords = coordenadas[vertex["label"]]
+        folium.Marker(location=coords, popup=vertex["label"], icon=folium.Icon(color='black')).add_to(m)
+
+    '''for i in range(len(caminho) - 1):
+        start = coordenadas[caminho[i]]
+        end = coordenadas[caminho[i + 1]]
+        add_edge(m, start, end, color='red')'''
+
+    #folium.Marker(location=coordenadas['Barra'], popup='Barra', icon=folium.Icon(color='blue')).add_to(m)
+
+
+    mapa_html = m._repr_html_()
     mapa_path = os.path.join('static', 'mapa.html')
     m.save(mapa_path) 
 
