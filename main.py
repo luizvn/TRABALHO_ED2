@@ -534,6 +534,26 @@ weights = [3.5, 2.8, 4.1, 5.4, 2.7, 3.9, 4.2, 5.4, 2.0, 5.1, 5,0, 3.2, 6.8, 3.9,
            5.1, 5.2, 5.7, 4.4, 4.4, 5.0, 6.0, 3.3, 3.5, 3.7, 7.9]
 g.es['weight'] = weights
 
+def calcular_subtotal(dict):
+    subtotal = 0.0
+    for codigo, produto in dict.items():
+        subtotal = subtotal + float(produto['valor']) * int(produto['quantidade'])
+    return round(subtotal, 2)
+
+def get_shortest_path(grafo, origem, destino):
+    try:
+        origem_idx = [v.index for v in grafo.vs if v['label'] == origem][0]
+        destino_idx = [v.index for v in grafo.vs if v['label'] == destino][0]
+        
+        caminho = grafo.get_shortest_paths(origem_idx, to=destino_idx, weights='weight', output='epath')[0]
+        peso_total = sum(grafo.es[e]['weight'] for e in caminho)
+        
+        caminho_bairros = [grafo.vs[edge.source]['label'] for edge in grafo.es[caminho]] + [destino]
+        return caminho_bairros, peso_total
+    except IndexError:
+        return None, float('inf')
+
+
 @app.route('/etapa3')
 def sobre3():
     titulo = "Catálogo"
@@ -543,9 +563,18 @@ def sobre3():
     except Exception as e:
         print(str(e))
 
+    try:
+        with open('carrinho.json', 'r') as file:
+            carrinho = json.load(file)
+            subtotal = calcular_subtotal(carrinho)
+    except Exception as e:
+        carrinho = {}
+        subtotal = 0
+        print(str(e))
+    titulo_carrinho = 'Carrinho'
+
     m = folium.Map(location=[-12.9535447,-38.483914], zoom_start=12)
     
-
     for edge in g.es:
         start = coordenadas[g.vs[edge.source]["label"]]
         end = coordenadas[g.vs[edge.target]["label"]]
@@ -558,28 +587,181 @@ def sobre3():
         else:
             folium.Marker(location=coords, popup=vertex["label"], icon=folium.Icon(color='black')).add_to(m)
 
-    '''for i in range(len(caminho) - 1):
-        start = coordenadas[caminho[i]]
-        end = coordenadas[caminho[i + 1]]
-        add_edge(m, start, end, color='red')'''
-
-    #folium.Marker(location=coordenadas['Barra'], popup='Barra', icon=folium.Icon(color='blue')).add_to(m)
-
-
     mapa_html = m._repr_html_()
     mapa_path = os.path.join('static', 'mapa.html')
     m.save(mapa_path) 
 
-    return render_template('etapa3.html', titulo=titulo, catalogo=catalogo, mapa_html=mapa_html)
+    return render_template('etapa3.html', titulo=titulo, catalogo=catalogo, mapa_html=mapa_html, carrinho=carrinho, titulo_carrinho=titulo_carrinho, subtotal=subtotal)
 
 @app.route('/mapa')
 def mapa():
     return render_template('mapa.html')
+
+@app.route('/inserir_carrinho', methods=['POST'])
+def adicionar_carrinho():
+    titulo = "Catálogo"
+    try:
+        with open('catalogo.json', 'r') as file:
+            catalogo = json.load(file)
+    except Exception as e:
+        print(str(e))
+
+    try:
+        with open('carrinho.json', 'r') as file:
+            carrinho = json.load(file)
+            subtotal = calcular_subtotal(carrinho)
+    except Exception as e:
+        carrinho = {}
+        subtotal = 0
+        print(str(e))
+
+    produto = request.form['chave']
+    quantidade = request.form['quantidade']
+
+    titulo_carrinho = 'Carrinho'
+    if produto in catalogo:
+        detalhes = catalogo[produto]
+        carrinho[produto] = {
+            'categoria': detalhes['categoria'],
+            'tipo': detalhes['tipo'],
+            'marca': detalhes['marca'],
+            'modelo': detalhes['modelo'],
+            'cor': detalhes['cor'],
+            'valor': detalhes['valor'],
+            'quantidade': quantidade,
+            'estoque': detalhes['estoque']    
+        }
+
+    try:
+        with open('carrinho.json', 'w') as file:
+            json.dump(carrinho, file)
+    except Exception as e:
+        print(str(e))    
+
+    m = folium.Map(location=[-12.9535447,-38.483914], zoom_start=12)
+    
+    for edge in g.es:
+        start = coordenadas[g.vs[edge.source]["label"]]
+        end = coordenadas[g.vs[edge.target]["label"]]
+        folium.PolyLine([start, end],color='red', weight=2.0, opacity=0.6).add_to(m)
+
+    for vertex in g.vs:
+        coords = coordenadas[vertex["label"]]
+        if vertex['label'] == 'Barra':
+            folium.Marker(location=coords, popup=vertex["label"], icon=folium.Icon(color='red')).add_to(m)
+        else:
+            folium.Marker(location=coords, popup=vertex["label"], icon=folium.Icon(color='black')).add_to(m)
+
+    mapa_html = m._repr_html_()
+    mapa_path = os.path.join('static', 'mapa.html')
+    m.save(mapa_path)
+    return render_template('etapa3.html', titulo=titulo, catalogo=catalogo, mapa_html=mapa_html, carrinho=carrinho, titulo_carrinho=titulo_carrinho, subtotal=subtotal)
+
+@app.route('/remover_carrinho', methods=['POST'])
+def remover_carrinho():
+    titulo = "Catálogo"
+    try:
+        with open('catalogo.json', 'r') as file:
+            catalogo = json.load(file)
+    except Exception as e:
+        print(str(e))
+
+    try:
+        with open('carrinho.json', 'r') as file:
+            carrinho = json.load(file)
+            subtotal = calcular_subtotal(carrinho)
+    except Exception as e:
+        carrinho = {}
+        subtotal = 0
+        print(str(e))
+
+    produto = request.form['chave']
+
+    titulo_carrinho = 'Carrinho'
+    if produto in carrinho.keys():
+        removido = carrinho.pop(produto)
+
+    try:
+        with open('carrinho.json', 'w') as file:
+            json.dump(carrinho, file)
+    except Exception as e:
+        print(str(e))    
+
+    m = folium.Map(location=[-12.9535447,-38.483914], zoom_start=12)
+    
+    for edge in g.es:
+        start = coordenadas[g.vs[edge.source]["label"]]
+        end = coordenadas[g.vs[edge.target]["label"]]
+        folium.PolyLine([start, end],color='red', weight=2.0, opacity=0.6).add_to(m)
+
+    for vertex in g.vs:
+        coords = coordenadas[vertex["label"]]
+        if vertex['label'] == 'Barra':
+            folium.Marker(location=coords, popup=vertex["label"], icon=folium.Icon(color='red')).add_to(m)
+        else:
+            folium.Marker(location=coords, popup=vertex["label"], icon=folium.Icon(color='black')).add_to(m)
+
+    mapa_html = m._repr_html_()
+    mapa_path = os.path.join('static', 'mapa.html')
+    m.save(mapa_path)
+    return render_template('etapa3.html', titulo=titulo, catalogo=catalogo, mapa_html=mapa_html, carrinho=carrinho, titulo_carrinho=titulo_carrinho, subtotal=subtotal)
+    
+@app.route('/confirmar_carrinho', methods=['POST'])
+def confirmar_carrinho():
+    titulo = "Catálogo"
+    try:
+        with open('catalogo.json', 'r') as file:
+            catalogo = json.load(file)
+    except Exception as e:
+        print(str(e))
+
+    try:
+        with open('carrinho.json', 'r') as file:
+            carrinho = json.load(file)
+            subtotal = calcular_subtotal(carrinho)
+    except Exception as e:
+        carrinho = {}
+        subtotal = 0
+        print(str(e))
+
+    destino = str(request.form['chave'])
+    origem = 'Barra'
+
+    caminho, peso = get_shortest_path(g, origem, destino)
+    if caminho:
+        print(f"Caminho mais curto de {origem} para {destino}: {' -> '.join(caminho)}")
+        print(f"Peso total do caminho: {peso}")
+        subtotal = subtotal + (peso*2.2)
+        subtotal = round(subtotal, 2)
+    else:
+        #emitir algum erro no js
+        pass
     
 
-# exemplo no navegador
-# http://localhost:5000/paginaEDII
+    titulo_carrinho = 'Carrinho'
 
+    m = folium.Map(location=[-12.9535447,-38.483914], zoom_start=12)
 
+    '''if destino in coordenadas.keys(): 
+        g.get_shortest_paths(0, to=g.vs[destino])
+        print("The shortest paths from vertex 0 to vertex 4:", g.get_shortest_paths(0, to=g.vs[destino]))
+        #coisa que falta pra fazer'''
+    
+    for edge in g.es:
+        start = coordenadas[g.vs[edge.source]["label"]]
+        end = coordenadas[g.vs[edge.target]["label"]]
+        folium.PolyLine([start, end],color='red', weight=2.0, opacity=0.6).add_to(m)
+
+    for vertex in g.vs:
+        coords = coordenadas[vertex["label"]]
+        if vertex['label'] == 'Barra':
+            folium.Marker(location=coords, popup=vertex["label"], icon=folium.Icon(color='red')).add_to(m)
+        else:
+            folium.Marker(location=coords, popup=vertex["label"], icon=folium.Icon(color='black')).add_to(m)
+
+    mapa_html = m._repr_html_()
+    mapa_path = os.path.join('static', 'mapa.html')
+    m.save(mapa_path)
+    return render_template('etapa3.html', titulo=titulo, catalogo=catalogo, mapa_html=mapa_html, carrinho=carrinho, titulo_carrinho=titulo_carrinho, subtotal=subtotal)
 # execução
 app.run(debug=True)
