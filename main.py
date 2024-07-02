@@ -1,4 +1,4 @@
-from flask import Flask, url_for, render_template, request, jsonify, send_file
+from flask import Flask, url_for, render_template, request, jsonify, send_file, flash
 import json
 import sys
 import gzip
@@ -10,6 +10,7 @@ import os
 
 # |=======| INICIALIZAÇÃO |=======|
 app = Flask(__name__, static_folder='src')
+app.secret_key = 'gabi_chupa_cu'
 
 # |=======| IROTA PRINCIPAL(HOME) |=======|
 @app.route('/')
@@ -553,10 +554,10 @@ def get_shortest_path(grafo, origem, destino):
         peso_total = sum(grafo.es[e]['weight'] for e in caminho)
         
         caminho_bairros = [grafo.vs[edge.source]['label'] for edge in grafo.es[caminho]] + [destino]
-        return caminho_bairros, peso_total
+        return caminho_bairros, peso_total, caminho
     except IndexError:
         print('erro no destino')
-        return None, float('inf')
+        return None, float('inf'), None
 
 # |=======| ETAPA 03 |=======|
 @app.route('/etapa3')
@@ -616,7 +617,7 @@ def adicionar_carrinho():
     try:
         with open('carrinho.json', 'r') as file:
             carrinho = json.load(file)
-            subtotal = calcular_subtotal(carrinho)
+            
     except Exception as e:
         carrinho = {}
         subtotal = 0
@@ -638,6 +639,8 @@ def adicionar_carrinho():
             'quantidade': quantidade,
             'estoque': detalhes['estoque']    
         }
+        
+    subtotal = calcular_subtotal(carrinho)
 
     try:
         with open('carrinho.json', 'w') as file:
@@ -677,7 +680,7 @@ def remover_carrinho():
     try:
         with open('carrinho.json', 'r') as file:
             carrinho = json.load(file)
-            subtotal = calcular_subtotal(carrinho)
+            
     except Exception as e:
         carrinho = {}
         subtotal = 0
@@ -688,6 +691,8 @@ def remover_carrinho():
     titulo_carrinho = 'Carrinho'
     if produto in carrinho.keys():
         removido = carrinho.pop(produto)
+
+    subtotal = calcular_subtotal(carrinho)
 
     try:
         with open('carrinho.json', 'w') as file:
@@ -738,30 +743,25 @@ def confirmar_carrinho():
     destino = str(request.form['chave'])
     origem = 'Barra'
 
-    caminho, peso = get_shortest_path(g, origem, destino)
+    caminho, peso, caminho_arestas = get_shortest_path(g, origem, destino)
     if caminho:
         print(f"Caminho mais curto de {origem} para {destino}: {' -> '.join(caminho)}")
         print(f"Peso total do caminho: {peso}")
-        subtotal = subtotal + (peso*2.2)
+        subtotal = subtotal + (peso * 2.2)
         subtotal = round(subtotal, 2)
     else:
-        print('[erro] - Destino errado') # mandar retorno pro js para exibir um alert
+        print('[erro] - Destino errado')  # mandar retorno pro js para exibir um alert
         return jsonify({'error': 'DESTINO MANDADO FOI ERRADO'}), 400
-    
 
     titulo_carrinho = 'Carrinho'
 
-    m = folium.Map(location=[-12.9535447,-38.483914], zoom_start=12)
+    m = folium.Map(location=[-12.9535447, -38.483914], zoom_start=12)
 
-    '''if destino in coordenadas.keys(): 
-        g.get_shortest_paths(0, to=g.vs[destino])
-        print("The shortest paths from vertex 0 to vertex 4:", g.get_shortest_paths(0, to=g.vs[destino]))
-        #coisa que falta pra fazer'''
-    
-    for edge in g.es:
+    for edge_index in caminho_arestas:
+        edge = g.es[edge_index]
         start = coordenadas[g.vs[edge.source]["label"]]
         end = coordenadas[g.vs[edge.target]["label"]]
-        folium.PolyLine([start, end],color='red', weight=2.0, opacity=0.6).add_to(m)
+        folium.PolyLine([start, end], color='red', weight=2.0, opacity=0.6).add_to(m)
 
     for vertex in g.vs:
         coords = coordenadas[vertex["label"]]
@@ -777,13 +777,17 @@ def confirmar_carrinho():
 
 def remover_estoque(catalogo, carrinho):
     for codigo, produto in catalogo.items():
-        for codigo_carrinho, produto_carrinho in carrinho.items():
-            if codigo == codigo_carrinho:
-                produto['estoque'] = int(produto['estoque']) - int(produto_carrinho['quantidade'])
+        if codigo in carrinho:
+            quantidade_carrinho = int(carrinho[codigo]['quantidade'])
+            if int(produto['estoque']) < quantidade_carrinho:
+                return False, f"Estoque insuficiente para o produto de ID {codigo}. Quantidade em estoque: {produto['estoque']}."
+            produto['estoque'] -= quantidade_carrinho
+    return True, "Estoque atualizado com sucesso."
 
 @app.route('/finalizar_pedido', methods=['POST'])
 def finalizar_pedido():
     titulo = "Catálogo"
+    titulo_carrinho = 'Carrinho'
     try:
         with open('catalogo.json', 'r') as file:
             catalogo = json.load(file)
@@ -801,11 +805,47 @@ def finalizar_pedido():
         print(str(e))
         return jsonify({'error': 'ERRO AO MANDAR O CARRINHO'}), 500
     
+    m = folium.Map(location=[-12.9535447,-38.483914], zoom_start=12)
+    
+    for edge in g.es:
+        start = coordenadas[g.vs[edge.source]["label"]]
+        end = coordenadas[g.vs[edge.target]["label"]]
+        folium.PolyLine([start, end],color='red', weight=2.0, opacity=0.6).add_to(m)
+
+    for vertex in g.vs:
+        coords = coordenadas[vertex["label"]]
+        if vertex['label'] == 'Barra':
+            folium.Marker(location=coords, popup=vertex["label"], icon=folium.Icon(color='red')).add_to(m)
+        else:
+            folium.Marker(location=coords, popup=vertex["label"], icon=folium.Icon(color='black')).add_to(m)
+
+    mapa_html = m._repr_html_()
+    mapa_path = os.path.join('static', 'mapa.html')
+    m.save(mapa_path)
+    
     # Diminuindo do estoque
-    remover_estoque(catalogo, carrinho)
+    sucesso, mensagem_estoque = remover_estoque(catalogo, carrinho)
+    if not sucesso:
+        flash(mensagem_estoque, 'error')
+        return render_template('etapa3.html', titulo=titulo, catalogo=catalogo, carrinho=carrinho, titulo_carrinho=titulo_carrinho, subtotal=subtotal, mapa_html=mapa_html)
 
+    
+    subtotal = 0
+    carrinho = {}
+    try:
+        with open('carrinho.json', 'w') as file:
+            json.dump(carrinho, file)
+    except Exception as e:
+        print(str(e))  
 
-    return None
+    try:
+        with open('catalogo.json', 'w', encoding="utf-8") as arquivo:
+            json.dump(catalogo, arquivo)
+    except Exception as e:
+        print(str(e))
+
+    flash('Pedido finalizado com sucesso!', 'success')
+    return render_template('etapa3.html', titulo=titulo, catalogo=catalogo, mapa_html=mapa_html, carrinho=carrinho, titulo_carrinho=titulo_carrinho, subtotal=subtotal)
 
 
 # execução

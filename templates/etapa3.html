@@ -24,11 +24,12 @@
     </script> -->
     
     <style>
-        body{
+        body {
             background-color: rgb(197, 11, 11);
         }
+
         /* MENU */
-        .titulo{
+        .titulo {
             display: flex;
             align-items: center;
             align-content: center;
@@ -38,20 +39,24 @@
             padding-bottom: 20px;
             width: 100%;
         }
-        .imagem_logo{
+
+        .imagem_logo {
             margin-top: 10px;
             margin-right: 500px;
         }
-        .texto{
+
+        .texto {
             margin-left: 20px;
             text-align: center;
         }
-        .nome{
+
+        .nome {
             text-align: center;
             font-style: bold;
             margin-bottom: 0;
         }
-        .aucunha{
+
+        .aucunha {
             text-align: center;
             font-style: italic;
             margin-top: 5px;
@@ -62,8 +67,8 @@
             padding: 1px;
             text-align: center;
         }
-        
-        nav a{
+
+        nav a {
             background-color: darkred;
             padding: 2px;
             color: antiquewhite;
@@ -72,47 +77,36 @@
         }
 
         /* TABELA */
-        .titulo_tabela{
+        .titulo_tabela {
             text-align: center;
         }
-        table{
+
+        table {
             border-collapse: collapse;
             width: 100%;
             text-align: center;
         }
+
         td, th {
             border: 1px solid #dcd1d1; /* Adiciona bordas às células */
             padding: 8px; /* Adiciona espaço interno dentro das células */
         }
-        /*tr:nth-child(even) {
-            background-color: #f2f2f2; /* Define uma cor de fundo alternada para linhas pares 
-        }*/
+
         th {
             background-color: #000000; /* Define uma cor de fundo para as células do cabeçalho */
             font-weight: bold; /* Deixa o texto em negrito para destacar o cabeçalho */
             text-align: center; /* Alinha o texto à esquerda no cabeçalho */
             color: whitesmoke;
         }
+
         tr:hover {
             background-color: #f5f5f5; /* Define uma cor de fundo quando o mouse passa sobre a linha */
         }
-        /*td, th {
-            padding: 10px; /* Aumenta o espaço interno dentro das células 
-        } */
 
         /* FORMS */
         form {
             font-family: Arial, sans-serif; /* Escolha uma fonte adequada para o formulário */
         }
-            
-        /*input[type="text"], input[type="number"], textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }*/
 
         input[type="submit"], button {
             padding: 8px 15px;
@@ -146,11 +140,17 @@
             margin-left: auto;
             margin-right: auto;
             margin-top: 20px;
-            margin-bottom: auto;
+            margin-bottom: 20px;  /* Ajuste a margem inferior */
             width: 55%;
-            height: 200px;
+            height: 400px; /* Aumentar a altura para melhorar a visualização */
+            display: block;
         }
 
+        .mapa_abaixo {
+            margin-top: 120px; /* Ajuste a margem superior para mais espaçamento */
+            display: block;
+            clear: both;  /* Garantir que os elementos flutuantes anteriores não interfiram */
+        }
     </style>
 </head>
 <body>
@@ -294,7 +294,7 @@
                 </fieldset>
                 <input type="submit" value="Submit" />
             </form>
-            <h3>Calcular o frete</h3>
+            
         
         </div>
         <div class="mapa">
@@ -302,7 +302,12 @@
                 {{ mapa_html | safe }}
             </fieldset>
         </div>
-        <form id="carrinhoForm" method="post", action="/confirmar_carrinho">
+        <br>
+        <br>
+        <br>
+        <br>
+        <h3 class="mapa_abaixo">Calcular o frete</h3>
+        <form method="post", action="/confirmar_carrinho">
             <fieldset>
                 <div class="row"></div>
                     <label for="chave">Insira o local à ser entregue: <input id="chave" name="chave" type="text" required /></label>
@@ -343,6 +348,15 @@
                 });
             });
         </script>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <ul class=flashes>
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
     </main>
 </body>
 </html>
