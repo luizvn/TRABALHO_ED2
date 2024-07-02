@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Etapa 3</title>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <!--<link   rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
             integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
             crossorigin=""/>
@@ -226,7 +228,7 @@
                 <fieldset>
                     <div class="row">
                         <label for="chave">Insira o ID do produto desejado: <input id="chave" name="chave" type="number" required /></label>
-                        <label for="quantidade">Insira o ID do produto desejado: <input id="quantidade" name="quantidade" type="number" required /></label>
+                        <label for="quantidade">Insira a QUANTIDADE do produto desejado: <input id="quantidade" name="quantidade" type="number" required /></label>
                     </div>
                 </fieldset>
                 <input type="submit" value="Submit" />
@@ -300,7 +302,7 @@
                 {{ mapa_html | safe }}
             </fieldset>
         </div>
-        <form method="post", action="/confirmar_carrinho">
+        <form id="carrinhoForm" method="post", action="/confirmar_carrinho">
             <fieldset>
                 <div class="row"></div>
                     <label for="chave">Insira o local à ser entregue: <input id="chave" name="chave" type="text" required /></label>
@@ -308,6 +310,39 @@
             </fieldset>
             <input type="submit" value="Submit">
         </form>
+
+        <h3>Finalizar Pedido</h3>
+        <form method="post", action="/finalizar_pedido">
+            <input type="submit" value="Submit" id="finalizar">
+        </form>
+
+        <!-- JAVA SCRIPT -->
+        <script>
+            $(document).ready(function() {
+                $('#carrinhoForm').submit(function(event) {
+                    event.preventDefault(); // Impede o envio padrão do formulário
+    
+                    $.ajax({
+                        url: '/confirmar_carrinho',
+                        type: 'POST',
+                        data: $(this).serialize(),
+                        success: function(retorno) {
+                            if (retorno.subtotal !== undefined) {
+                                $('#resultado').text('Subtotal: ' + retorno.subtotal);
+                            } else if (retorno.error !== undefined) {
+                                alert('Erro: ' + retorno.error);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            /*console.error('Status:', status); // Log do status
+                            console.error('Erro:', error); // Log do erro
+                            console.error('Resposta:', xhr.responseText); // Log da resposta   */ 
+                            alert('Erro na solicitação: ' + xhr.responseText);
+                        }
+                    });
+                });
+            });
+        </script>
     </main>
 </body>
 </html>

@@ -555,6 +555,7 @@ def get_shortest_path(grafo, origem, destino):
         caminho_bairros = [grafo.vs[edge.source]['label'] for edge in grafo.es[caminho]] + [destino]
         return caminho_bairros, peso_total
     except IndexError:
+        print('erro no destino')
         return None, float('inf')
 
 # |=======| ETAPA 03 |=======|
@@ -722,6 +723,7 @@ def confirmar_carrinho():
             catalogo = json.load(file)
     except Exception as e:
         print(str(e))
+        return jsonify({'error': 'Erro ao carregar o catálogo.'}), 500
 
     try:
         with open('carrinho.json', 'r') as file:
@@ -731,6 +733,7 @@ def confirmar_carrinho():
         carrinho = {}
         subtotal = 0
         print(str(e))
+        return jsonify({'error': 'ERRO AO MANDAR O CARRINHO'}), 500
 
     destino = str(request.form['chave'])
     origem = 'Barra'
@@ -742,8 +745,8 @@ def confirmar_carrinho():
         subtotal = subtotal + (peso*2.2)
         subtotal = round(subtotal, 2)
     else:
-        #emitir algum erro no js
-        pass
+        print('[erro] - Destino errado') # mandar retorno pro js para exibir um alert
+        return jsonify({'error': 'DESTINO MANDADO FOI ERRADO'}), 400
     
 
     titulo_carrinho = 'Carrinho'
@@ -771,6 +774,38 @@ def confirmar_carrinho():
     mapa_path = os.path.join('static', 'mapa.html')
     m.save(mapa_path)
     return render_template('etapa3.html', titulo=titulo, catalogo=catalogo, mapa_html=mapa_html, carrinho=carrinho, titulo_carrinho=titulo_carrinho, subtotal=subtotal)
+
+def remover_estoque(catalogo, carrinho):
+    for codigo, produto in catalogo.items():
+        for codigo_carrinho, produto_carrinho in carrinho.items():
+            if codigo == codigo_carrinho:
+                produto['estoque'] = int(produto['estoque']) - int(produto_carrinho['quantidade'])
+
+@app.route('/finalizar_pedido', methods=['POST'])
+def finalizar_pedido():
+    titulo = "Catálogo"
+    try:
+        with open('catalogo.json', 'r') as file:
+            catalogo = json.load(file)
+    except Exception as e:
+        print(str(e))
+        return jsonify({'error': 'Erro ao carregar o catálogo.'}), 500
+
+    try:
+        with open('carrinho.json', 'r') as file:
+            carrinho = json.load(file)
+            subtotal = calcular_subtotal(carrinho)
+    except Exception as e:
+        carrinho = {}
+        subtotal = 0
+        print(str(e))
+        return jsonify({'error': 'ERRO AO MANDAR O CARRINHO'}), 500
+    
+    # Diminuindo do estoque
+    remover_estoque(catalogo, carrinho)
+
+
+    return None
 
 
 # execução

@@ -24,7 +24,8 @@ ETAPA 03 - GRAFOS
     -
 
 -> FALTANDO:
-    - Mensagem de erro quando inserido um destino errado
-    - botão para finalizar pedido
-    - diminuir estoque
+    - FEITO: Mensagem de erro quando inserido um destino errado
+    - FEITO: botão para finalizar pedido - sem teste
+    - FEITO: diminuir estoque - sem teste
     - mensagem de erro caso a quantidade seja maior que o estoque
+    - FEITO: ajustar função de calcular 
