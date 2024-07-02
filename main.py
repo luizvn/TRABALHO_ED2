@@ -8,15 +8,16 @@ import folium
 from igraph import *
 import os
 
-# inicializaçaõ
+# |=======| INICIALIZAÇÃO |=======|
 app = Flask(__name__, static_folder='src')
 
-
+# |=======| IROTA PRINCIPAL(HOME) |=======|
 @app.route('/')
 def principal():
     return render_template('index.html')
 
-
+# |=======| ETAPA 01 |=======|
+# ======= ROTA ETAPA 01 =======
 @app.route('/etapa1')
 def sobre1():
     titulo = "Catálogo"
@@ -28,7 +29,7 @@ def sobre1():
         print(str(e))
     return render_template('etapa1.html', titulo=titulo, catalogo=catalogo)
 
-
+# ======= CARREGANDO A TABELA DA ETAPA 01 =======
 @app.route('/submit_form', methods=['POST'])
 def submit_form():
     try:
@@ -51,7 +52,7 @@ def submit_form():
 
     return render_template('etapa1.html', catalogo=output)
 
-
+# ======= MÉTODO DE INSERIR ELEMENTO =======
 @app.route('/inserir', methods=['POST'])
 def inserir():
     try:
@@ -84,7 +85,7 @@ def inserir():
 
     return render_template('etapa1.html', catalogo=catalogo)
 
-
+# ======= MÉTODO DE DELETAR ELEMENTO =======
 @app.route('/deletar', methods=['POST'])
 def deletar():
 
@@ -107,7 +108,7 @@ def deletar():
 
     return render_template('etapa1.html', catalogo=catalogo)
 
-
+# ======= MÉTODO DE EDITAR ELEMENTO =======
 @app.route('/editar', methods=['POST'])
 def editar():
     try:
@@ -215,7 +216,7 @@ def compress_and_download():
         f.write(compressed_data)
     return send_file('compressed.json', as_attachment=True)'''
 
-
+# ======= DOWLOAD DO JSON =======
 @app.route('/download', methods=['GET'])
 def download():
     try:
@@ -235,7 +236,7 @@ def download():
     # Enviando o arquivo comprimido para o cliente como uma resposta de download
     return send_file(compressed_file, as_attachment=True, download_name='catalogo.json.gz')
 
-
+# ======= COMPRIMINDO JSON =======
 def compress_json(json_data):
     # Comprimindo os dados JSON
     with BytesIO() as compressed_file:
@@ -244,7 +245,8 @@ def compress_json(json_data):
             f.write(json_str.encode('utf-8'))
         return compressed_file.getvalue()
 
-
+# |=======| ETAPA 02 |=======|
+# ======= CARREGANDO CATÁLOGO NA TABELA =======
 @app.route('/etapa2')
 def sobre2():
     titulo = "Catálogo"
@@ -255,19 +257,19 @@ def sobre2():
         print(str(e))
     return render_template('etapa2.html', titulo=titulo, catalogo=catalogo)
 
-
+# ======= CRIANDO ÁRVORE B POR ID =======
 def criarAB_id():
     ap = None
     chave = 1
     return ab.Inserir_id(ap, chave)
 
-
+# ======= CRIANDO ÁRVORE B POR VALOR =======
 def criarAB_valor():
     ap = None
     chave = 1
     return ab.Inserir_chave(ap, chave)
 
-
+# ======= MÉTODO PARA PESQUISAR NA ÁRVORE B =======
 @app.route('/pesquisa', methods=['POST'])
 def pesquisa():
     radio = request.form.get('radio')
@@ -381,7 +383,7 @@ def pesquisa():
 
     return render_template('etapa2.html', titulo='Catálogo', catalogo=output)'''
 
-
+# ======= IMPRIMINDO ÁRVORE B EM ORDEM =======
 @app.route('/imprime_ordem', methods=['POST'])
 def imprime_ordem():
     radio = request.form.get('radio')
@@ -395,7 +397,7 @@ def imprime_ordem():
         lista = ab.Imprime(ap2, lista, radio)
     return render_template('etapa2.html', titulo='Catálogo', catalogo=lista)
 
-
+# ======= CRIANDO MENOR ELEMENTO DA ÁRVORE B =======
 @app.route('/imprime_menor', methods=['POST'])
 def imprime_menor():
     radio = request.form.get('radio')
@@ -413,7 +415,7 @@ def imprime_menor():
         lista = ab.ImprimeMenor(reg, ap2, lista, radio)
     return render_template('etapa2.html', titulo='Catálogo', catalogo=lista)
 
-
+# ======= CRIANDO MAIOR ELEMENTO DA ÁRVORE B =======
 @app.route('/imprime_maior', methods=['POST'])
 def imprime_maior():
     radio = request.form.get('radio')
@@ -431,7 +433,7 @@ def imprime_maior():
         lista = ab.ImprimeMaior(reg, ap2, lista, radio)
     return render_template('etapa2.html', titulo='Catálogo', catalogo=lista)
 
-
+# ======= CRIANDO ENTRE DOIS ELEMENTOS PELA ÁRVORE B =======
 @app.route('/imprime_entre', methods=['POST'])
 def imprime_entre():
     radio = request.form.get('radio')
@@ -462,7 +464,7 @@ def imprime_entre():
 
 # |=======| GRAFOS |=======|
 
-# Coordenadas:
+# ======= COORDENADAS =======
 coordenadas = {
     'Barra': [-13.009615, -38.531981], #0
     'Ondina': [-13.005999, -38.509447], #1
@@ -492,14 +494,14 @@ coordenadas = {
     'São Rafael':[-12.936610, -38.422724], #25
 }
 
-# Criando o grafo
+# ======= CRIANDO GRAFO ======= 
 g = Graph(directed=True)
 g.add_vertices(len(coordenadas))
 for i, (key, value) in enumerate(coordenadas.items()):
     g.vs[i]["id"] = i
     g.vs[i]["label"] = key
 
-# Adicionando arestas
+# ======= ADICIONANDO ARESTAS =======
 g.add_edges([(0, 1), (0, 7),                          # Barra x
               (1, 10), (1, 9), (1, 2),                # Ondina x
               (2, 10), (2, 3), (2, 4),                # Rio Vermelho x
@@ -529,17 +531,19 @@ g.add_edges([(0, 1), (0, 7),                          # Barra x
               ])                       
 #45 conexões, caminhos
 
-# Adicionando pesos e  labels de arestas
+# ======= ADICIONANDO DISTÂNCIAS =======
 weights = [3.5, 2.8, 4.1, 5.4, 2.7, 3.9, 4.2, 5.4, 2.0, 5.1, 5,0, 3.2, 6.8, 3.9, 3.4, 5.0, 3.7, 4.7, 2.9, 4.5, 4.3, 3.2, 4.7, 4.5, 2.6, 3.8, 3.4, 3.6, 4.8, 4.3, 3.7, 4.0, 7.2, 
            5.1, 5.2, 5.7, 4.4, 4.4, 5.0, 6.0, 3.3, 3.5, 3.7, 7.9]
 g.es['weight'] = weights
 
+# ======= CALCULANDO SUBTOTAL =======
 def calcular_subtotal(dict):
     subtotal = 0.0
     for codigo, produto in dict.items():
         subtotal = subtotal + float(produto['valor']) * int(produto['quantidade'])
     return round(subtotal, 2)
 
+# ======= GERANDO MENOR CAMINHO ENTRE GRAFOS =======
 def get_shortest_path(grafo, origem, destino):
     try:
         origem_idx = [v.index for v in grafo.vs if v['label'] == origem][0]
@@ -553,7 +557,7 @@ def get_shortest_path(grafo, origem, destino):
     except IndexError:
         return None, float('inf')
 
-
+# |=======| ETAPA 03 |=======|
 @app.route('/etapa3')
 def sobre3():
     titulo = "Catálogo"
@@ -593,10 +597,12 @@ def sobre3():
 
     return render_template('etapa3.html', titulo=titulo, catalogo=catalogo, mapa_html=mapa_html, carrinho=carrinho, titulo_carrinho=titulo_carrinho, subtotal=subtotal)
 
+# ======= MAPA =======
 @app.route('/mapa')
 def mapa():
     return render_template('mapa.html')
 
+# ======= INSERIR NO CARRINHO =======
 @app.route('/inserir_carrinho', methods=['POST'])
 def adicionar_carrinho():
     titulo = "Catálogo"
@@ -657,6 +663,7 @@ def adicionar_carrinho():
     m.save(mapa_path)
     return render_template('etapa3.html', titulo=titulo, catalogo=catalogo, mapa_html=mapa_html, carrinho=carrinho, titulo_carrinho=titulo_carrinho, subtotal=subtotal)
 
+# ======= REMOVER DO CARRINHO =======
 @app.route('/remover_carrinho', methods=['POST'])
 def remover_carrinho():
     titulo = "Catálogo"
@@ -706,6 +713,7 @@ def remover_carrinho():
     m.save(mapa_path)
     return render_template('etapa3.html', titulo=titulo, catalogo=catalogo, mapa_html=mapa_html, carrinho=carrinho, titulo_carrinho=titulo_carrinho, subtotal=subtotal)
     
+# ======= CONFIRMAR CARRINHO =======
 @app.route('/confirmar_carrinho', methods=['POST'])
 def confirmar_carrinho():
     titulo = "Catálogo"
@@ -763,5 +771,7 @@ def confirmar_carrinho():
     mapa_path = os.path.join('static', 'mapa.html')
     m.save(mapa_path)
     return render_template('etapa3.html', titulo=titulo, catalogo=catalogo, mapa_html=mapa_html, carrinho=carrinho, titulo_carrinho=titulo_carrinho, subtotal=subtotal)
+
+
 # execução
 app.run(debug=True)

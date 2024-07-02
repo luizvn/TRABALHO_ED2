@@ -22,3 +22,9 @@ ETAPA 03 - GRAFOS
 
 -> Calcular valor do frete com melhor caminho:
     -
+
+-> FALTANDO:
+    - Mensagem de erro quando inserido um destino errado
+    - botão para finalizar pedido
+    - diminuir estoque
+    - mensagem de erro caso a quantidade seja maior que o estoque
