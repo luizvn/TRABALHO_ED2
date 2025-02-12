@@ -1,1 +1,0 @@
-o cliente vai dar o endereço e vai ter q transformar em coordenada e comparar com qual waypoint é o mais proximo e dps calcula qual o caminho para chegar até lá utilizando os outros waypoits.
