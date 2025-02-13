@@ -6,185 +6,89 @@
     <title>Royal Sports</title>
     <link rel="icon" href="src/img/logo-home.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <style>
-        body{
-            background-color: rgb(197, 11, 11);
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
         }
-        .titulo{
+        header {
             display: flex;
             align-items: center;
-            align-content: center;
-            background-color: black;
+            justify-content: space-between;
+            background-color: #222;
+            padding: 10px 20px;
             color: white;
-            margin: 0;
-            padding-bottom: 20px;
-            width: 100%;
         }
-        .imagem_logo{
-            margin-top: 10px;
-            margin-right: 500px;
+        .logo img {
+            height: 60px;
         }
-        .texto{
-            margin-left: 20px;
+        .navbar {
+            display: flex;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            transition: 0.3s;
+        }
+        .navbar a:hover {
+            background-color: crimson;
+        }
+        .history {
             text-align: center;
-        }
-        .nome{
-            text-align: center;
-            font-style: bold;
-            margin-bottom: 0;
-        }
-        .aucunha{
-            text-align: center;
-            font-style: italic;
-            margin-top: 5px;
-        }
-
-        nav {
-            background-color: rgba(210, 77, 62, 0.7); 
-            padding: 1px;
-            text-align: center;
-        }
-        
-        nav a{
-            background-color: darkred;
-            padding: 2px;
-            color: antiquewhite;
-            border: 2px solid rgb(221, 181, 181);
+            padding: 50px 20px;
+            background-color: white;
             margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
-
-        /* CABEÇALHO */
-
-        ul {
-            list-style: none; /* Remove bullet points */
-            padding: 0; /* Remove padding */
-            margin: 0; /* Remove margin */
+        footer {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 20px;
         }
-
-        .item {
-            display: inline-block; /* Make li elements inline-block */
-            margin: 0; /* Ensure no additional margins */
-            padding: 0; /* Ensure no additional padding */
-            position: relative; /* Ensure proper positioning for pseudo-elements */
+        .social-buttons a {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 15px;
+            background-color: #0077b5;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: 0.3s;
         }
-
-        .item a{
-            display: block;
-            width: 3.2rem;
-            height: 3.2rem;
-            background-color: #191919;
-            border: 3px solid #191919;
-            overflow: hidden;
-            z-index: 1;
-            border-radius: 50%;
-            text-align: center; /* Center the icon horizontally */
-            line-height: 4.0rem; /* Vertically center the icon */
-            position: relative;
+        .social-buttons a:hover {
+            background-color: #005582;
         }
-
-        .item a::before{
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-color);
-            z-index: 0;
-            scale: (1, 0);
-            transform-origin: bottom;
-            transition: scale 0.5s ease;
-            border-radius: 50%; /* Ensure the pseudo-element is also a circle */
-        }
-
-        .item :hover a::before{
-            scale: (1, 1);
-            transform: rotateX(360deg);
-        }
-
-        .icon{
-            font-size: 2rem;
-            color: hsl(0, 0%, 100%);
-            transition: 0.5s ease;
-            z-index: 2;
-            position: relative;
-        }
-
-        .item.in a:hover .icon {
-            transition: color 0.5s ease 0.5s; /* Delay the color change */
-            color: aqua; /* Change the icon color to aqua */
-        }
-
-        .item a:hover .icon{
-            color: #d60404;
-            transform: rotateY(360deg);
-        }
-
-        
-        
-        /*
-        .item:nth-child(2){
-            --bg-color: #0077b5;
-        }
-        
-        .item:nth-child(3){
-            --bg-color: #ff0000;
-        }
-        */
     </style>
 </head>
 <body>
-    <div class="index">
-        <main>
-            <header  class="titulo">
-                <div class="imagem_logo">
-                    <a href=""><img src="src/img/logo-home.png" alt="Logo da Leão Imperial" height="120"></a>
-                </div>
-                <div class="texto">
-                    <h1 class="nome">Royal Sports</h1>
-                    <p class="aucunha">O Leão Imperial</p>
-                </div>
-            </header>
-            <nav>
-                <h2>
-                    <a class="etapa1" href="etapa1">etapa 1</a>
-                    <a class="etapa2" href="etapa2">etapa 2</a>
-                    <a class="etapa3" href="etapa3">etapa 3</a>
-                </h2>
-            </nav>
-            
-            <aside>
-                aside
-            </aside>
-            <section>
-                <h2></h2>Corpo + descrição da empresa
-            </section>
-            <article>
-                article
-                <i class="fa fa-instagram"></i>
-            </article>
-        </main>
-        <footer class="cabecalho">
-            <section>
-                <h2></h2>Cabeçalho
-            </section>
-             
-            <section> <!-- REDES SOCIAIS -->
-                <ul>
-                    <li class="item"> 
-                        <a href="https://www.instagram.com/centauroesporte/">
-                            <i class="icon fa fa-instagram"></i>
-                        </a>
-                    </li>
-                    <li class="item"> 
-                        <a href="https://www.instagram.com/centauroesporte/">
-                            <i class="icon fa fa-linkedin in"></i>
-                        </a>
-                    </li>
-
-                </ul>
-            </section>
-            
-        </footer>
-    </div>  
+    <header>
+        <div class="logo">
+            <img src="src/img/logo-home.png" alt="Logo da Royal Sports">
+        </div>
+        <nav class="navbar">
+            <a href="#">Home</a>
+            <a href="etapa1">Catálogo</a>
+            <a href="etapa2">Busca</a>
+            <a href="etapa3">Compra</a>
+        </nav>
+    </header>
+    
+    <section class="history">
+        <h2>Nossa História</h2>
+        <p>A Royal Sports nasceu com o objetivo de oferecer os melhores produtos esportivos do mercado, garantindo qualidade e inovação para atletas de todos os níveis. Fundada por entusiastas do esporte, nossa missão é proporcionar excelência e paixão pelo esporte em cada item vendido.</p>
+    </section>
+    
+    <footer>
+        <p>&copy; 2025 Royal Sports - Todos os direitos reservados</p>
+        <div class="social-buttons">
+            <a href="https://www.linkedin.com/in/gabriel-rodrigues-a551012a2/" target="_blank">LinkedIn de Gabriel Rodrigues</a>
+            <a href="https://www.linkedin.com/in/luizvn/" target="_blank">LinkedIn de Luiz Vinícius</a>
+        </div>
+    </footer>
 </body>
 </html>
