@@ -10,7 +10,7 @@ import os
 
 # |=======| INICIALIZAÇÃO |=======|
 app = Flask(__name__, static_folder='src')
-app.secret_key = 'gabi_chupa_cu'
+app.secret_key = 'gabi_luiz'
 
 # |=======| IROTA PRINCIPAL(HOME) |=======|
 @app.route('/')

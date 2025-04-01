@@ -357,15 +357,14 @@
             
         
         </div>
-        <div class="mapa">
-            <fieldset>
-                {{ mapa_html | safe }}
-            </fieldset>
+        <div class="container">
+            <div class="mapa">
+                <fieldset>
+                    {{ mapa_html | safe }}
+                </fieldset>
+            </div>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
+    
         <div class="container">
             <h3 class="mapa_abaixo">Calcular o frete</h3>
             <form method="post", action="/confirmar_carrinho">
