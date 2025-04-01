@@ -7,25 +7,25 @@
     <link rel="icon" href="src/img/logo-home.png" type="image/png">
     <style>
         /* Reset de estilos padrão */
-/* Variáveis de cores */
-:root {
-  --primary-bg: #c50b0b;         /* Vermelho principal */
-  --header-bg: #000000;          /* Fundo do cabeçalho */
-  --accent-color: #d24d3a;       /* Cor de destaque */
-  --light-bg: #ffffff;           /* Fundo claro para conteúdo */
-  --text-color: #333333;         /* Cor padrão de texto */
-  --border-color: #dddddd;       /* Cor das bordas */
-}
+    /* Variáveis de cores */
+    :root {
+    --primary-bg: #c50b0b;         /* Vermelho principal */
+    --header-bg: #000000;          /* Fundo do cabeçalho */
+    --accent-color: #d24d3a;       /* Cor de destaque */
+    --light-bg: #ffffff;           /* Fundo claro para conteúdo */
+    --text-color: #333333;         /* Cor padrão de texto */
+    --border-color: #dddddd;       /* Cor das bordas */
+    }
 
-/* Reset geral */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    /* Reset geral */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
- /* BODY */
- body {
+    /* BODY */
+    body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
@@ -84,111 +84,109 @@
       background-color: #005582;
     }
 
-/* Container principal */
-.container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 20px auto;
-  background-color: var(--light-bg);
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
+    /* Container principal */
+    .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: var(--light-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
 
-/* Tabela de produtos */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
+    /* Tabela de produtos */
+    table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    }
 
-table th,
-table td {
-  padding: 12px;
-  text-align: center;
-  border: 1px solid var(--border-color);
-}
+    table th,
+    table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    }
 
-table th {
-  background-color: var(--header-bg);
-  color: var(--light-bg);
-}
+    table th {
+    background-color: var(--header-bg);
+    color: var(--light-bg);
+    }
 
-table tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
+    table tr:nth-child(even) {
+    background-color: #f9f9f9;
+    }
 
-table tr:hover {
-  background-color: #f1f1f1;
-}
+    table tr:hover {
+    background-color: #f1f1f1;
+    }
 
-/* Estilização dos formulários */
-form {
-  margin-bottom: 30px;
-}
+    /* Estilização dos formulários */
+    form {
+    margin-bottom: 30px;
+    }
 
-form fieldset {
-  border: 1px solid var(--border-color);
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 15px;
-}
+    form fieldset {
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    }
 
-form legend {
-  font-weight: bold;
-  padding: 0 10px;
-  color: var(--primary-bg);
-}
+    form legend {
+    font-weight: bold;
+    padding: 0 10px;
+    color: var(--primary-bg);
+    }
 
-form label {
-  display: block;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
+    form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    }
 
-form input[type="text"],
-form input[type="number"],
-form select,
-form textarea {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  margin-bottom: 15px;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  font-size: 1em;
-}
+    form input[type="text"],
+    form input[type="number"],
+    form select,
+    form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1em;
+    }
 
-form input[type="submit"],
-form button {
-  background-color: var(--header-bg);
-  color: var(--light-bg);
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+    form input[type="submit"],
+    form button {
+    background-color: var(--header-bg);
+    color: var(--light-bg);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    }
 
-form input[type="submit"]:hover,
-form button:hover {
-  background-color: var(--accent-color);
-}
+    form input[type="submit"]:hover,
+    form button:hover {
+    background-color: var(--accent-color);
+    }
 
-/* Layout responsivo para formulários em linha */
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-bottom: 15px;
-}
+    /* Layout responsivo para formulários em linha */
+    .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 15px;
+    }
 
-.row > div {
-  flex: 1;
-  min-width: 200px;
-}
-
-               
+    .row > div {
+    flex: 1;
+    min-width: 200px;
+    } 
 
     </style>
 </head>
@@ -351,10 +349,10 @@ form button:hover {
         <footer>
             <p>&copy; 2025 Royal Sports - Todos os direitos reservados</p>
             <div class="social-buttons">
-              <a href="https://www.linkedin.com/in/gabriel-rodrigues-a551012a2/" target="_blank">LinkedIn de Gabriel Rodrigues</a>
-              <a href="https://www.linkedin.com/in/luizvn/" target="_blank">LinkedIn de Luiz Vinícius</a>
+                <a href="https://www.linkedin.com/in/gabriel-rodrigues-a551012a2/" target="_blank">LinkedIn de Gabriel Rodrigues</a>
+                <a href="https://www.linkedin.com/in/luizvn/" target="_blank">LinkedIn de Luiz Vinícius</a>
             </div>
-          </footer>
+        </footer>
     </div>  
 </body>
 </html>

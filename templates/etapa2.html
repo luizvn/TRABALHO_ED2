@@ -29,146 +29,162 @@
         };
     </script>
     <style>
-        /* BODY */
-        body{
-            background-color: rgb(197, 11, 11);
-        }
-        /* HEADER */
-        .titulo{
-            display: flex;
-            align-items: center;
-            align-content: center;
-            text-align: center;
-            background-color: black;
-            color: white;
-            margin: 0;
-            padding-bottom: 20px;
-            width: 100%;
-        }
-        .imagem_logo{
-            margin-top: 10px;
-            margin-right: 500px;
-        }
-        .nome{
-            text-align: center;
-            font-style: bold;
-            margin-bottom: 0;
-        }
-        .aucunha{
-            text-align: center;
-            font-style: italic;
-            margin-top: 5px;
-        }
-        /* NAVEGADOR DE PÁGINAS */
-        nav {
-        background-color: rgba(210, 77, 62, 0.7);
-        padding: 1px;
-        text-align: center;
-        }
-        
-        nav a{
-            background-color: darkred;
-            padding: 2px;
-            color: antiquewhite;
-            border: 2px solid rgb(221, 181, 181);
-            margin: 20px;
-        }
-        
-        /* TABELA */
-        .titulo_tabela{
-            text-align: center;
-        }
-        table{
-            border-collapse: collapse;
-            width: 100%;
-            text-align: center;
-        }
-        td, th {
-            border: 1px solid #dcd1d1; /* Adiciona bordas às células */
-            padding: 8px; /* Adiciona espaço interno dentro das células */
-        }
-        /*tr:nth-child(even) {
-            background-color: #f2f2f2; /* Define uma cor de fundo alternada para linhas pares 
-        }*/
-        th {
-            background-color: #000000; /* Define uma cor de fundo para as células do cabeçalho */
-            font-weight: bold; /* Deixa o texto em negrito para destacar o cabeçalho */
-            text-align: center; /* Alinha o texto à esquerda no cabeçalho */
-            color: whitesmoke;
-        }
-        tr:hover {
-            background-color: #f5f5f5; /* Define uma cor de fundo quando o mouse passa sobre a linha */
-        }
-        /*td, th {
-            padding: 10px; /* Aumenta o espaço interno dentro das células 
-        } */
-
-        /* FORMS */
-        form {
-            font-family: Arial, sans-serif; /* Escolha uma fonte adequada para o formulário */
-        }
-            
-        /*input[type="text"], input[type="number"], textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }*/
-
-        input[type="submit"], button {
-            padding: 8px 15px;
-            background-color: #3d0901;
-            color: #fff;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-
-        .row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-
-        .row .break { /* NÃO TÁ FUNCIONANDO */
-            flex-basis: 100%;
-            height: 0; /* Para evitar que a linha tenha altura extra */
-        }
-
-        .row label {
-            flex-basis: calc(50% - 5px); /* Define a largura de cada label para ocupar metade da linha */
-        }
-
-        .row input {
-            flex-basis: calc(50% - 5px); /* Define a largura de cada input para ocupar metade da linha */
-        }
-
-        /*label{
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }*/
-
-        /*label input {
-            flex: 1;
-            margin-left: 10px;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        } */
-
-        input:focus, textarea {
-            outline: none;
-            border-color: #ab3702; /* Cor quando o input recebe foco */
-            box-shadow: 0 0 5px rgba(180, 29, 3, 0.5); /* Sombra quando o input recebe foco */
-        }
-
-               
+            /* Reset geral */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    /* Body */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      line-height: 1.6;
+    }
+    /* Header e Navbar */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #222;
+      padding: 10px 100px;
+      color: white;
+    }
+    .logo img {
+      height: 60px;
+    }
+    .texto {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    nav {
+      display: flex;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 15px;
+      transition: 0.3s;
+    }
+    nav a:hover {
+      background-color: crimson;
+    }
+    /* Container principal */
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 20px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    /* Tabela */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #dcd1d1;
+    }
+    th {
+      background-color: #000;
+      color: whitesmoke;
+      font-weight: bold;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+    /* Formulários */
+    form {
+      margin-bottom: 30px;
+    }
+    fieldset {
+      border: 1px solid #ccc;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+    legend {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    input[type="submit"],
+    button {
+      padding: 10px 20px;
+      background-color: #222;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    input[type="submit"]:hover,
+    button:hover {
+        background-color: crimson;
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 15px;
+    }
+    .row > div {
+      flex: 1;
+      min-width: 200px;
+    }
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: #ab3702;
+      box-shadow: 0 0 5px rgba(180, 29, 3, 0.5);
+    }
+    /* Footer */
+    footer {
+      background-color: #222;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    .social-buttons a {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 15px;
+      background-color: #0077b5;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    .social-buttons a:hover {
+      background-color: #005582;
+    }
 
     </style>
 </head>
@@ -177,20 +193,19 @@
         <main>
             <header  class="titulo">
                 <div class="imagem_logo">
-                    <a href=""><img src="src/img/logo-home.png" alt="Logo da Leão Imperial" height="120"></a>
+                    <a href=""><img src="src/img/logo-home.png" alt="Logo da Leão Imperial" height="60px"></a>
                 </div>
                 <div class="texto">
                     <h1 class="nome">Royal Sports</h1>
                     <p class="aucunha">O Leão Imperial</p>
                 </div>
+                <nav>
+                    <a class="etapa1" href="etapa1">Home</a>
+                    <a class="etapa1" href="etapa1">Catálogo</a>
+                    <a class="etapa2" href="etapa2">Busca</a>
+                    <a class="etapa3" href="etapa3">Compra</a>
+                </nav>
             </header>
-            <nav>
-                <h2>
-                    <a class="etapa1" href="etapa1">etapa 1</a>
-                    <a class="etapa2" href="etapa2">etapa 2</a>
-                    <a class="etapa3" href="etapa3">etapa 3</a>
-                </h2>
-            </nav>
             <div class="container text-center">
 
                 <h2 class="titulo_tabela"> {{ titulo}} </h2>
@@ -306,38 +321,14 @@
                     <input type="submit" value="Submit" />
                 </form>
             </div>
-            <aside>
-                aside
-            </aside>
-            <section>
-                <h2></h2>Corpo + descrição da empresa
-            </section>
-            <article>
-                article
-                <i class="fa fa-instagram"></i>
-            </article>
-        </main>
-        <footer class="cabecalho">
-            <section>
-                <h2></h2>Cabeçalho
-            </section>
-             
-            <section> <!-- REDES SOCIAIS -->
-                <ul>
-                    <li class="item"> 
-                        <a href="https://www.instagram.com/centauroesporte/">
-                            <i class="icon fa fa-instagram"></i>
-                        </a>
-                    </li>
-                    <li class="item"> 
-                        <a href="https://www.instagram.com/centauroesporte/">
-                            <i class="icon fa fa-linkedin in"></i>
-                        </a>
-                    </li>
-
-                </ul>
-            </section>
             
+        </main>
+        <footer>
+            <p>&copy; 2025 Royal Sports - Todos os direitos reservados</p>
+            <div class="social-buttons">
+                <a href="https://www.linkedin.com/in/gabriel-rodrigues-a551012a2/" target="_blank">LinkedIn de Gabriel Rodrigues</a>
+                <a href="https://www.linkedin.com/in/luizvn/" target="_blank">LinkedIn de Luiz Vinícius</a>
+            </div>
         </footer>
 </body>
 </html>
