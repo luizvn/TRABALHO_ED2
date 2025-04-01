@@ -16,3 +16,29 @@ Este projeto é um sistema de e-commerce desenvolvido para a venda de produtos e
 - Backend: Python com Flask e Json para persistir os dados
 - Estrutura de Dados: Tabela hashing, árvore B e Graphos
 
+## Estrutura do Projeto
+
+- templates/ : Contêm os arquivos HTML que compõem a página
+- static/ : Contêm o arquivo CSS + Mapa.html (leaflet)
+- src/ : imagens e instrução do trabalho
+- main.py : Arquivo principal que define as rotas e lógica usando flask
+- ArvoreB.py : Arquivo que gera árvore B, para maior eficiência na busca.
+- catalogo.json : Onde fica armazenado os produtos
+- carrinho: Json que exibe os produtos no carrinho
+
+## Como Executar
+
+1. Faça clone do projeto
+2. Baixe as dependências necessárias, como o flask
+3. execute o arquivo __'main.py'__
+4. acesse o __'http://localhost:5000'__
+
+## Contato:
+
+Gabriel Rodrigues:
+- Email: gabrielcsro@gmail.com
+- Linkedin: https://www.linkedin.com/in/gabriel-rodrigues-a551012a2/
+
+Luiz Vinícius:
+- Email: luizvinicius128@gmail.com
+- Linkedin: https://www.linkedin.com/in/luizvn/
